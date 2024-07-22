@@ -1,18 +1,18 @@
 // pages/login.js
-
+import { Link } from "react-router-dom";
 
 export default function Login() {
   return (
     <div className="bg-gray-800 text-white flex min-h-screen flex-col items-center pt-16 sm:justify-center sm:pt-0">
-      <a
+      <Link
         className="text-foreground font-semibold text-2xl tracking-tighter mx-auto flex items-center gap-2"
-        href="/"
+        to="/"
       >
         <div>
           <img src='/logo.png' width={40} height={40}/>
         </div>
         LabXplorer
-      </a>
+      </Link>
       <div className="relative mt-12 w-full max-w-lg sm:mt-10">
         <div className="relative -mb-px h-px w-full bg-gradient-to-r from-transparent via-sky-300 to-transparent"></div>
         <div className="mx-5 border dark:border-b-white/50 dark:border-t-white/50 border-b-white/20 sm:border-t-white/20 shadow-[20px_0_20px_20px] shadow-slate-500/10 dark:shadow-white/20 rounded-lg border-white/20 border-l-white/20 border-r-white/20 sm:shadow-sm lg:rounded-xl lg:shadow-none">
@@ -81,20 +81,20 @@ export default function Login() {
                   />
                   <span className="text-xs">Remember me</span>
                 </label>
-                <a
-                  href="/forgot-password"
+                <Link
+                  to="/forgot-password"
                   className="text-sm font-medium text-foreground underline"
                 >
                   Forgot password?
-                </a>
+                </Link>
               </div>
               <div className="mt-4 flex items-center justify-end gap-x-2">
-                <a
-                  href="/register"
+                <Link
+                  to="/register"
                   className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:ring hover:ring-white h-10 px-4 py-2 duration-200"
                 >
                   Register
-                </a>
+                </Link>
                 <button
                   className="font-semibold hover:bg-gray-800 hover:text-white hover:ring hover:ring-white transition duration-300 inline-flex items-center justify-center rounded-md text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-white text-gray-800 h-10 px-4 py-2"
                   type="submit"

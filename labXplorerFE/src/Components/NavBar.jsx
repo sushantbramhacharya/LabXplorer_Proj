@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { CiSearch } from "react-icons/ci";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { Link } from 'react-router-dom';
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,12 +12,12 @@ const NavBar = () => {
 
   return (
     <nav className="flex items-center bg-gray-800 px-20 p-3 flex-wrap">
-      <a href="/" className="p-2 mr-4 inline-flex items-center">
+      <Link to="/" className="p-2 mr-4 inline-flex items-center">
        <img className='mr-4' src='/logo.png' width={40} height={40}/>
         <span className="text-xl text-white font-bold tracking-wide">
           LabXplorer
         </span>
-      </a>
+      </Link>
       <button
         className="text-white inline-flex p-3 hover:bg-gray-900 rounded lg:hidden ml-auto hover:text-white outline-none nav-toggler"
         onClick={handleToggle}
@@ -41,12 +42,12 @@ const NavBar = () => {
             </button>
           </div>
           
-          <a
-            href="/login"
+          <Link
+            to="/login"
             className="lg:inline-block lg:w-auto w-full px-3 py-2 rounded-xl text-gray-300 items-center justify-center bg-gray-600 hover:bg-gray-700 hover:text-white"
           >
             <span>Login</span>
-          </a>
+          </Link>
         </div>
       </div>
     </nav>
