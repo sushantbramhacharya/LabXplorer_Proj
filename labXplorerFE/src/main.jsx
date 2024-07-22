@@ -10,11 +10,13 @@ import {
 import './index.css'
 import Welcome from './Screens/Welcome.jsx';
 import Login from './Screens/LoginScreen.jsx';
+import Register from './Screens/RegisterScreen.jsx';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App/>}>
       <Route path='' element={<Welcome/>} />
       <Route path='login' element={<Login/>} />
+      <Route path='register' element={<Register/>}/>
     </Route>
   )
 )
