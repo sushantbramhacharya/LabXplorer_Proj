@@ -1,19 +1,35 @@
 import { addUser, getUserByUsername } from "../models/UserModel.js";
 import { hashPassword, verifyPassword } from "../utils/PasswordHashing.js";
+import asyncHandler from "../middleware/asyncHandler.js";
+import { generateToken } from "../utils/GenerateToken.js";
 
-export const loginUser=async (req,res)=>{
-    const user= await getUserByUsername("tesdst");
+export const loginUser=asyncHandler(async (req,res)=>{
+    const data=await req.body;
+    const user= await getUserByUsername(data.username);
+    
     if(!user)
     {
         res.json({"Error":"No User found"});
     }
     else{
-        const verification=await verifyPassword("test","$2b$10$9vee2wWYgpTzURhJM3X0F.WANI61rtYaPsaUYwPhmMu8LR1/nC95.")
-        res.json({"Success":"User found","Verified":verification});
+        const verification=await verifyPassword(data.password,user.password)
+        if(verification){
+            generateToken(res,user.id)
+            res.json({
+                id:user.id,
+                username:user.username,
+                email:user.email
+              });
+        }
+        else{
+            res.json({
+                "Error":"Incorrect Password"
+              });
+        }
     }
-}
+})
 
-export const registerUser=async (req,res)=>{
+export const registerUser=asyncHandler(async (req,res)=>{
     const user= await addUser("sad","ads","sadasd");
     if(user)
     {
@@ -23,4 +39,4 @@ export const registerUser=async (req,res)=>{
     else{
         res.json({"Error":"Error Occuers"});
     }
-}
+})
