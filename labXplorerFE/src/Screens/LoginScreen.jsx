@@ -1,7 +1,47 @@
 // pages/login.js
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useDispatch,useSelector } from 'react-redux';
+import { useLoginMutation } from "../api/userApi";
+import { setCredentials } from '../Slices/userSlice';
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const [login,{isLoading,isError}]=useLoginMutation();
+  const dispatch=useDispatch();
+  const {user} = useSelector((state)=>state.userSlice);
+
+  const navigator =useNavigate()
+
+  useEffect(()=>{
+    if(user)
+    {
+    if(Object.keys(user).length>0)
+      {
+          navigator('/profile')
+      }
+    }
+  },[])
+
+  const handleSubmit=async(e)=>{
+    e.preventDefault();
+    try{
+      const user=await login({username,password}).unwrap();
+      if(user)
+      {
+        dispatch(setCredentials({...user}));
+        alert("Yay logged in")
+        navigator('/profile')
+      }
+    }catch(err)
+    {
+      console.log(err?.data?.message)
+    }
+  }
+
   return (
     <div className="bg-gray-800 text-white flex min-h-screen flex-col items-center pt-16 sm:justify-center sm:pt-0">
       <Link
@@ -39,18 +79,15 @@ export default function Login() {
                         fill="currentColor"
                         className="w-6 h-6"
                       >
-                        {/* <path
-                          fillRule="evenodd"
-                          d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z"
-                          clipRule="evenodd"
-                        /> */}
                       </svg>
                     </div>
                   </div>
                   <input
                     type="text"
                     name="username"
+                    value={username}
                     placeholder="Username"
+                    onChange={(e)=>setUsername(e.target.value)}
                     autoComplete="off"
                     className="block w-full border-0 bg-transparent p-0 text-sm file:my-1 file:rounded-full file:border-0 file:bg-accent file:px-4 file:py-2 file:font-medium placeholder:text-muted-foreground/90 focus:outline-none focus:ring-0 sm:leading-7 text-foreground"
                   />
@@ -67,6 +104,8 @@ export default function Login() {
                     <input
                       type="password"
                       name="password"
+                      value={password}
+                      onChange={(e)=>setPassword(e.target.value)}
                       className="block w-full border-0 bg-transparent p-0 text-sm file:my-1 placeholder:text-muted-foreground/90 focus:outline-none focus:ring-0 focus:ring-teal-500 sm:leading-7 text-foreground"
                     />
                   </div>
@@ -97,7 +136,7 @@ export default function Login() {
                 </Link>
                 <button
                   className="font-semibold hover:bg-gray-800 hover:text-white hover:ring hover:ring-white transition duration-300 inline-flex items-center justify-center rounded-md text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-white text-gray-800 h-10 px-4 py-2"
-                  type="submit"
+                  onClick={handleSubmit}
                 >
                   Log in
                 </button>

@@ -11,15 +11,22 @@ import './index.css'
 import Welcome from './Screens/Welcome.jsx';
 import Login from './Screens/LoginScreen.jsx';
 import Register from './Screens/RegisterScreen.jsx';
+import { Provider } from 'react-redux';
+import store from './store.js';
+import { ProfileScreen } from './Screens/ProfileScreen.jsx';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App/>}>
       <Route path='' element={<Welcome/>} />
       <Route path='login' element={<Login/>} />
       <Route path='register' element={<Register/>}/>
+      <Route path='profile' element={<ProfileScreen/>}/>
     </Route>
   )
 )
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router}/>
+  <Provider store={store}>
+
+    <RouterProvider router={router}/>
+  </Provider>
 )
