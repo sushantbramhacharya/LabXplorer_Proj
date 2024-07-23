@@ -11,6 +11,9 @@ const port = 3000;
 app.use(cors());
 //bodyParser
 app.use(bodyParser.json());
+// Cookie Parser
+import cookieParser from "cookie-parser";
+app.use(cookieParser());
 // Middleware to parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 

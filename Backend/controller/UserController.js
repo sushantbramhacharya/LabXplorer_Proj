@@ -40,3 +40,7 @@ export const registerUser=asyncHandler(async (req,res)=>{
         res.json({"Error":"Error Occuers"});
     }
 })
+
+export const getProfile=asyncHandler(async(req,res)=>{
+    res.json({"sucess":true})
+})
