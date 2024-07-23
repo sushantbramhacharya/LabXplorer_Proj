@@ -22,22 +22,26 @@ export const loginUser=asyncHandler(async (req,res)=>{
               });
         }
         else{
-            res.json({
-                "Error":"Incorrect Password"
-              });
+            res.status(401)
+            throw new Error("Incorrect Credentials")
         }
     }
 })
 
 export const registerUser=asyncHandler(async (req,res)=>{
-    const user= await addUser("sad","ads","sadasd");
-    if(user)
+    const data=req.body;
+    const hashedPassword=await hashPassword(data.password)
+    const user_created= await addUser(data.username,data.email,hashedPassword);
+    if(user_created)
     {
-        const hashedPassword=await hashPassword("test")
-        res.json({"Success":"User Created","Hashed":hashedPassword});
+        const user=await getUserByUsername(data.username);
+        generateToken(res,user.id)
+        res.json({"Success":"User Created"});
     }
     else{
-        res.json({"Error":"Error Occuers"});
+        res.status(403)//Forbidden
+        throw new Error("Incorrect Credentials")
+        //Server Crash Bairaxa Need to Fix this
     }
 })
 

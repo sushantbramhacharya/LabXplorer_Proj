@@ -21,6 +21,12 @@ export const getUserById=async(id)=>{
     }
 }
 export const addUser=async(username,email,password)=>{
-    const result = await pool.query(`INSERT INTO Users(username,email,password) VALUES('${username}','${email}','${password}')`)
-    return result
+    try{
+        const result = await pool.query(`INSERT INTO Users(username,email,password) VALUES('${username}','${email}','${password}')`)
+        return result
+    }
+    catch(err)
+    {
+        return undefined
+    }
 }

@@ -7,7 +7,6 @@ dotenv.config();
 
 export const userOnly=asyncHandler(async (req,res,next)=>{
     const token=req.cookies.jwt;
-
     if(token)
     {
         try{
