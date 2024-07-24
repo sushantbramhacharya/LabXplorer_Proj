@@ -16,7 +16,7 @@ export const userApi=api.injectEndpoints({
                 method:'POST',
                 body:data
             })
-        })
+        }),
     })
 })
 

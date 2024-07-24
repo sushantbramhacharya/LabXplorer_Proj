@@ -5,7 +5,8 @@ import { BASE_URL } from '../constants';
 export const api=createApi({
     baseQuery:fetchBaseQuery(
         {
-            baseUrl:BASE_URL
+            baseUrl:BASE_URL,
+            credentials: 'include',
         }
     ),
     reducerPath:"api",

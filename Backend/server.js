@@ -8,7 +8,10 @@ import UserRouter from './routes/UserRoute.js'
 const app=express();
 const port = 3000;
 
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173', // Adjust this to your frontend URL
+    credentials: true
+  }));
 //bodyParser
 app.use(bodyParser.json());
 // Cookie Parser

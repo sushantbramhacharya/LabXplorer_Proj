@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch,useSelector } from 'react-redux';
 import { logoutUser } from '../Slices/userSlice';
 import { ToastContainer,toast } from 'react-toastify';
+import { BASE_URL } from '../constants';
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,8 +17,13 @@ const NavBar = () => {
   const dispatch=useDispatch();
   const {user} = useSelector((state)=>state.userSlice);
 
-  const logoutHandler=(e)=>{
+  
+
+  const logoutHandler=async(e)=>{
     e.preventDefault()
+    await fetch(BASE_URL+"/user/logout",{
+      credentials: 'include',
+    })
     dispatch(logoutUser())
     .then(() => {
       // Notify success

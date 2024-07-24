@@ -1,6 +1,7 @@
 import { addUser, getUserByUsername } from "../models/UserModel.js";
 import { hashPassword, verifyPassword } from "../utils/PasswordHashing.js";
 import asyncHandler from "../middleware/asyncHandler.js";
+import { PRODUCTION } from "../constants.js";
 import { generateToken } from "../utils/GenerateToken.js";
 
 export const loginUser=asyncHandler(async (req,res)=>{
@@ -47,4 +48,14 @@ export const registerUser=asyncHandler(async (req,res)=>{
 
 export const getProfile=asyncHandler(async(req,res)=>{
     res.json({"sucess":true})
+})
+
+export const logoutUser=asyncHandler(async(req,res)=>{
+    res.cookie('jwt','',{
+        httpOnly:true,
+        secure:PRODUCTION,
+        sameSite:"lax",
+        maxAge: 0
+    })
+    res.json({"sucess":"Logout Sucessful"})
 })
