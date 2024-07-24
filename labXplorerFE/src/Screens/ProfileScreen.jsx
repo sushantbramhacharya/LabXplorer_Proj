@@ -1,10 +1,15 @@
 import React from 'react'
 
 import { logoutUser } from '../Slices/userSlice';
-
 import { useNavigate } from "react-router-dom";
 import { useDispatch,useSelector } from 'react-redux';
 import { useEffect } from "react";
+
+// Components
+import NavBar from '../Components/NavBar';
+import Sidebar from '../Components/Profile/Sidebar';
+import MainContent from '../Components/Profile/MainContext';
+import {ToastContainer,toast} from 'react-toastify';
 
 export const ProfileScreen = () => {
 
@@ -13,24 +18,28 @@ export const ProfileScreen = () => {
   const navigator =useNavigate()
 
   useEffect(()=>{
-    if(Object.keys(user).length<1)
+    if(user)
+    {
+      if(Object.keys(user).length<1)
       {
-          navigator('/login')
+        navigator('/')
       }
-  },[])
+    }
+    else{
+      navigator('/')
+    }
+  },[user])
 
   
-  const dispatch=useDispatch();
-
-  const logoutHandler=(e)=>{
-    e.preventDefault()
-    dispatch(logoutUser())
-    navigator('/login')
-  }
+  
   return (
     <>
-    <div>ProfileScreen</div>
-    <button onClick={logoutHandler}>Logout</button>
+    <ToastContainer/>
+    <NavBar/>
+    <div className='bg-gray-700 flex h-screen'>
+    <Sidebar/>
+    <MainContent />
+    </div>
     </>
   )
 }

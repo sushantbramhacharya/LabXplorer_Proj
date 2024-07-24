@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { CiSearch } from "react-icons/ci";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { Link } from 'react-router-dom';
+import { useDispatch,useSelector } from 'react-redux';
+import { logoutUser } from '../Slices/userSlice';
+import { ToastContainer,toast } from 'react-toastify';
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,7 +13,27 @@ const NavBar = () => {
     setIsOpen(!isOpen);
   };
 
+  const dispatch=useDispatch();
+  const {user} = useSelector((state)=>state.userSlice);
+
+  const logoutHandler=(e)=>{
+    e.preventDefault()
+    dispatch(logoutUser())
+    .then(() => {
+      // Notify success
+      toast.success("Logout Successful");
+      
+      navigate('/');
+    })
+    .catch((error) => {
+      // Handle any potential errors here
+      toast.error("Logout failed. Please try again.");
+    });
+  }
+
   return (
+    <>
+      <ToastContainer/>
     <nav className="flex items-center bg-gray-800 px-20 p-3 flex-wrap">
       <Link to="/" className="p-2 mr-4 inline-flex items-center">
        <img className='mr-4' src='/logo.png' width={40} height={40}/>
@@ -42,15 +65,23 @@ const NavBar = () => {
             </button>
           </div>
           
+          {!user?.username?
           <Link
             to="/login"
             className="lg:inline-block lg:w-auto w-full px-3 py-2 rounded-xl text-gray-300 items-center justify-center bg-gray-600 hover:bg-gray-700 hover:text-white"
           >
             <span>Login</span>
-          </Link>
+          </Link>:
+          <a
+          onClick={logoutHandler}
+          className="lg:inline-block lg:w-auto w-full px-3 py-2 rounded-xl text-gray-300 items-center justify-center bg-red-600 hover:bg-red-700 hover:text-white"
+        >
+          <span>Logout</span>
+        </a>}
         </div>
       </div>
     </nav>
+    </>
   );
 };
 
