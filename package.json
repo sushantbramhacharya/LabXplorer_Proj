@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "frontend": "npm run dev --prefix labXplorerFE",
+    "backend": "npm run dev --prefix Backend",
+    "dev": "concurrently \"npm run frontend\" \"npm run backend\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
