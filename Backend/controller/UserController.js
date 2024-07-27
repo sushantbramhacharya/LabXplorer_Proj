@@ -8,25 +8,29 @@ export const loginUser=asyncHandler(async (req,res)=>{
     const data=await req.body;
     const user= await getUserByUsername(data.username);
     
-    if(!user)
-    {
-        res.json({"Error":"No User found"});
-    }
-    else{
-        const verification=await verifyPassword(data.password,user.password)
-        if(verification){
-            generateToken(res,user.id)
-            res.json({
-                id:user.id,
-                username:user.username,
-                email:user.email
-              });
-        }
-        else{
-            res.status(401)
-            throw new Error("Incorrect Credentials")
-        }
-    }
+        if(!user)
+            {
+                res.status(404)
+                throw new Error("User not found")
+            }
+            else{
+                const verification=await verifyPassword(data.password,user.password)
+                if(verification){
+                    generateToken(res,user.id)
+                    res.json({
+                        id:user.id,
+                        username:user.username,
+                        email:user.email
+                      });
+                }
+                else{
+                    res.status(401)
+                    throw new Error("Incorrect Credentials")
+                }
+            }
+    
+   
+   
 })
 
 export const registerUser=asyncHandler(async (req,res)=>{
