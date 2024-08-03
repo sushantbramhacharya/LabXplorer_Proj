@@ -4,6 +4,9 @@
 @tailwind components;
 @tailwind utilities;
 
+*{
+  background-color: #1F2937;
+}
 
 @-webkit-keyframes animatetop {
   from {
@@ -198,4 +201,7 @@
 *{
   color: white;
   /* background-color: gray; */
+}
+img,svg,span{
+  background-color: transparent;
 }

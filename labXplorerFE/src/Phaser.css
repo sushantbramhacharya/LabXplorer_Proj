@@ -1,0 +1,6 @@
+#phaser-game-container {
+    display: block;
+    width: 70vw; /* 70% of viewport width */
+    height: 85vh; /* 85% of viewport height */
+    margin: 0 auto; /* Center horizontally */
+}

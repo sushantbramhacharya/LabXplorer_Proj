@@ -6,5 +6,8 @@
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "phaser": "^3.80.1"
   }
 }

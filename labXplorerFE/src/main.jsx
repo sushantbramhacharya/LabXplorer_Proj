@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
+import './Phaser.css'
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -14,6 +15,7 @@ import Register from './Screens/RegisterScreen.jsx';
 import { Provider } from 'react-redux';
 import store from './store.js';
 import { ProfileScreen } from './Screens/ProfileScreen.jsx';
+import ChemistryLabScreen from './Screens/ChemistryLabScreen.jsx';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App/>}>
@@ -21,6 +23,7 @@ const router = createBrowserRouter(
       <Route path='login' element={<Login/>} />
       <Route path='register' element={<Register/>}/>
       <Route path='profile' element={<ProfileScreen/>}/>
+      <Route path='chemistry-lab' element={<ChemistryLabScreen/>}/>
     </Route>
   )
 )
