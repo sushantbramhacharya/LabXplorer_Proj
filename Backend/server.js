@@ -4,6 +4,7 @@ import cors from 'cors';
 
 //Router Imports
 import UserRouter from './routes/UserRoute.js'
+import AdminRouter from './routes/AdminRoute.js'
 
 const app=express();
 const port = 3000;
@@ -24,6 +25,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 import { errorHandler } from './middleware/errorHandler.js';
 
 app.use('/api/user',UserRouter)
+app.use('/api/admin',AdminRouter)
 
 app.use(errorHandler);
 

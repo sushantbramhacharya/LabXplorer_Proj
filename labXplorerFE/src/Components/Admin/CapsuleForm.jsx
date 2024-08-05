@@ -8,8 +8,9 @@ const CapsuleForm = ({ capsule, onSave, onCancel }) => {
     title: capsule ? capsule.title : '',
     description: capsule ? capsule.description : '',
     content: capsule ? capsule.content : '',
-    image: capsule ? capsule.image : '',
     category: capsule ? capsule.category : '',
+    thumbnail: '',
+    images: [],
   });
 
   const handleChange = (e) => {
@@ -50,7 +51,7 @@ const CapsuleForm = ({ capsule, onSave, onCancel }) => {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="mb-4">
-          <label htmlFor="category" className="block text-gray-300 text-lg font-semibold pb-2">Category</label>
+            <label htmlFor="category" className="block text-gray-300 text-lg font-semibold pb-2">Category</label>
             <select
               id="category"
               name="category"
@@ -105,8 +106,6 @@ const CapsuleForm = ({ capsule, onSave, onCancel }) => {
               />
             )}
           </div>
-
-          {/* Multiple Images Input */}
           <div className="mb-4 col-span-2">
             <label htmlFor="images" className="block text-gray-300 text-lg font-semibold pb-2">Images</label>
             <input
@@ -140,7 +139,6 @@ const CapsuleForm = ({ capsule, onSave, onCancel }) => {
               formats={formats}
             />
           </div>
-          
         </div>
         <div className="flex pt-4 justify-end gap-4">
           <button
