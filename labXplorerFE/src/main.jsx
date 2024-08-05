@@ -16,11 +16,12 @@ import { Provider } from "react-redux";
 import store from "./store.js";
 import { ProfileScreen } from "./Screens/ProfileScreen.jsx";
 import LabScreen from "./Screens/LabScreen.jsx";
-import LeaningArea from "./Screens/LeaningArea.jsx";
 import { AdminScreen } from "./Screens/AdminScreens/AdminScreen.jsx";
 import { MainScreen } from "./Screens/AdminScreens/MainScreen.jsx";
 import { AddCapsules } from "./Screens/AdminScreens/AddCapsulesScreen.jsx";
 import GravitySim from "./Components/Labs/PhysicsSim/GravitySim.jsx";
+import LearningAreaScreen from "./Screens/LearningAreaScreen.jsx";
+import AboutScreen from "./Screens/AboutScreen.jsx";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -28,10 +29,11 @@ const router = createBrowserRouter(
       <Route path="login" element={<Login />} />
       <Route path="register" element={<Register />} />
       <Route path="profile" element={<ProfileScreen />} />
+      <Route path="about" element={<AboutScreen />} />
       <Route path="sims/" element={<LabScreen />}>
         <Route path="gravity" element={<GravitySim />} />
       </Route>
-      <Route path="learning-area" element={<LeaningArea />} />
+      <Route path="learning-area" element={<LearningAreaScreen />} />
       <Route path="admin/" element={<AdminScreen />}>
         <Route path="" element={<MainScreen />} />
         <Route path="add" element={<AddCapsules />} />
