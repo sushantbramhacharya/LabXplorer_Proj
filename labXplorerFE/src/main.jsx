@@ -15,7 +15,11 @@ import Register from './Screens/RegisterScreen.jsx';
 import { Provider } from 'react-redux';
 import store from './store.js';
 import { ProfileScreen } from './Screens/ProfileScreen.jsx';
-import ChemistryLabScreen from './Screens/ChemistryLabScreen.jsx';
+import LabScreen from './Screens/LabScreen.jsx';
+import LeaningArea from './Screens/LeaningArea.jsx';
+import { AdminScreen } from './Screens/AdminScreens/AdminScreen.jsx';
+import { MainScreen } from './Screens/AdminScreens/MainScreen.jsx';
+import { AddCapsules } from './Screens/AdminScreens/AddCapsulesScreen.jsx';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App/>}>
@@ -23,7 +27,12 @@ const router = createBrowserRouter(
       <Route path='login' element={<Login/>} />
       <Route path='register' element={<Register/>}/>
       <Route path='profile' element={<ProfileScreen/>}/>
-      <Route path='chemistry-lab' element={<ChemistryLabScreen/>}/>
+      <Route path='chemistry-lab' element={<LabScreen/>}/>
+      <Route path='learning-area' element={<LeaningArea/>}/>
+      <Route path='admin/' element={<AdminScreen/>}>
+        <Route path='' element={<MainScreen/>}/>
+        <Route path='add' element={<AddCapsules/>}/>
+      </Route>
     </Route>
   )
 )

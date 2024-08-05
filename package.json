@@ -8,6 +8,8 @@
     "concurrently": "^8.2.2"
   },
   "dependencies": {
-    "phaser": "^3.80.1"
+    "phaser": "^3.80.1",
+    "quill": "^2.0.2",
+    "react-quill": "^2.0.0"
   }
 }

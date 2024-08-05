@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import NavBar from '../Components/NavBar';
-import ChemistryLab from '../Components/Labs/ChemistryLab';
+import ChemistryLab from '../Components/Labs/Chemistry/ChemistryLab';
 import Descriptor from '../Components/Descriptor';
 
-const ChemistryLabScreen = () => {
+const LabScreen = () => {
     const experiment = {
         name: "Synthesis of Sodium Chloride",
         apparatus: [
@@ -50,4 +50,4 @@ const ChemistryLabScreen = () => {
     </>)
 };
 
-export default ChemistryLabScreen;
+export default LabScreen;

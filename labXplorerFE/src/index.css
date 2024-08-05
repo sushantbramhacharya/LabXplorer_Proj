@@ -205,3 +205,39 @@
 img,svg,span{
   background-color: transparent;
 }
+
+/* Quill */
+.ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-options {
+  background: #1F2937;
+}
+
+/* Custom styles for Quill toolbar buttons */
+.ql-toolbar .ql-formats button {
+  background-color: #333; /* Dark background for buttons */
+  color: #fff; /* White text color */
+  border: 1px solid #444; /* Slightly lighter border for contrast */
+}
+
+.ql-toolbar .ql-formats button:hover {
+  background-color: #555; /* Darker background on hover */
+}
+
+.ql-toolbar .ql-formats button.ql-active {
+  background-color: #666; /* Even darker background for active buttons */
+}
+
+/* Style for SVG icons within toolbar buttons */
+.ql-toolbar .ql-formats button svg {
+  stroke: #fff !important; /* Force white color for all SVG strokes */
+}
+
+.ql-toolbar .ql-formats button svg path,
+.ql-toolbar .ql-formats button svg circle,
+.ql-toolbar .ql-formats button svg rect,
+.ql-toolbar .ql-formats button svg line {
+  stroke: #fff !important; /* Force white color for all SVG strokes */
+}
+
+.ql-snow .ql-picker.ql-expanded .ql-picker-label .ql-stroke {
+  stroke: #ccc !important;
+}

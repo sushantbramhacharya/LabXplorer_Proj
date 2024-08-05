@@ -63,14 +63,23 @@ const NavBar = () => {
           <div className="relative lg:inline-block lg:w-auto w-full px-3 py-2">
             <input
               type="text"
-              placeholder="Search Expirements..."
+              placeholder="Search Here..."
               className="w-full px-4 py-2 rounded-xl outline-none text-gray-800 bg-gray-300 placeholder-gray-500"
             />
             <button className="absolute right-0 top-0 mt-4 mr-5 text-gray-400 hover:text-gray-600">
             <CiSearch size={25} fill='black'/>
             </button>
+            
           </div>
-          
+          <Link className='font-semibold'>
+            Discussions
+            </Link>
+            <Link className='font-semibold'>
+            About LabXplorer
+            </Link>
+            <Link className='font-semibold'>
+            Learning Areas
+            </Link>
           {!user?.username?
           <Link
             to="/login"
