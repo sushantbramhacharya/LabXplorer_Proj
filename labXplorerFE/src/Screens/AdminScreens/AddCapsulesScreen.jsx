@@ -1,6 +1,7 @@
 import React from 'react'
 import CapsuleForm from '../../Components/Admin/CapsuleForm'
 import axios from 'axios'
+import {BASE_URL} from '../../constants'
 
 export const AddCapsules = () => {
   const onSave = async (formData) => {
@@ -27,7 +28,8 @@ export const AddCapsules = () => {
     try {
       console.log("gonna go");
       
-      const response = await axios.post('/api/capsules', data, {
+      const response = await axios.post(BASE_URL+'/admin/add', data, {
+        withCredentials: true,
         headers: {
           'Content-Type': 'multipart/form-data',
         },

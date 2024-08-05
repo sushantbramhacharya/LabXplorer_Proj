@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "phaser": "^3.80.1",
-    "quill": "^2.0.2",
     "react-quill": "^2.0.0"
   }
 }

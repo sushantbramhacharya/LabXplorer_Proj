@@ -2,7 +2,7 @@ import React from 'react';
 
 const Descriptor = ({ experimentName, apparatus, steps,safety }) => {
   return (
-    <div className="mx-2 p-4 bg-slate-900 w-[18vw] text-white rounded-lg shadow-lg h-[85vh] overflow-y-auto">
+    <div className="mx-2 p-4 bg-slate-900 w-[25vw] text-white rounded-lg shadow-lg h-[85vh] overflow-y-auto">
       <h2 className="text-2xl font-bold mb-2 p-3 rounded-md">{experimentName}</h2>
       
       <div className="mb-4 p-3 rounded-md">
