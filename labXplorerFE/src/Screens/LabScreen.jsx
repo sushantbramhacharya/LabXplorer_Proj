@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import NavBar from '../Components/NavBar';
-import ChemistryLab from '../Components/Labs/Chemistry/GravitySim';
+import ChemistryLab from '../Components/Labs/PhysicsSim/GravitySim';
 import Descriptor from '../Components/Descriptor';
 import { Outlet } from 'react-router-dom';
 

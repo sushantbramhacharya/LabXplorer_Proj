@@ -20,7 +20,7 @@ import LeaningArea from "./Screens/LeaningArea.jsx";
 import { AdminScreen } from "./Screens/AdminScreens/AdminScreen.jsx";
 import { MainScreen } from "./Screens/AdminScreens/MainScreen.jsx";
 import { AddCapsules } from "./Screens/AdminScreens/AddCapsulesScreen.jsx";
-import GravitySim from "./Components/Labs/Chemistry/GravitySim.jsx";
+import GravitySim from "./Components/Labs/PhysicsSim/GravitySim.jsx";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
