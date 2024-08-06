@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { pool } from "../config/db.js";
 import { getProfile, loginUser, logoutUser, registerUser } from "../controller/UserController.js";
 import { userOnly } from "../middleware/authMiddleware.js";
 

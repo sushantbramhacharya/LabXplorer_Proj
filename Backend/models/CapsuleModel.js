@@ -21,3 +21,28 @@ export const insertCapsule = async (title, description, content, category, thumb
     return undefined;
   }
 };
+
+//Reads Capsules from the db and return only general information
+export const readCapsulesByCategoryWithLimit=async(category,limit)=>{
+  try{
+    const result = await pool.query(`SELECT id,title,description,thumbnail FROM capsules WHERE category = '${category}' ORDER BY id ASC LIMIT ${limit}`)
+    return result.rows;
+  }catch(err)
+  {
+    console.error("Error reading capsules by category ",err);
+    return undefined;
+  }
+}
+
+//Reads Capsule from the db and return all stored for specific capsule
+export const readCapsuleById=async(id)=>
+{
+  try{
+    const result=await pool.query(`SELECT * FROM capsules WHERE id = ${id}`)
+    return result.rows[0];
+  }catch(err)
+  {
+    console.error("Error reading capsule from id ",err);
+    return undefined;
+  }
+}
