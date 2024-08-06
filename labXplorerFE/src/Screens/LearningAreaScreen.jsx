@@ -27,7 +27,7 @@ const LearningAreaScreen = () => {
               <div className="w-2/3 p-4">
                 <h2 className="text-2xl font-bold">{category.name}</h2>
                 <p className="text-gray-200 mt-2">{category.description}</p>
-                <Link to={category.path}>
+                <Link to={"/capsules"+category.path}>
                   <button className="mt-4 px-4 py-2 bg-slate-700  text-white rounded hover:bg-slate-900">Explore</button>
                 </Link>
               </div>
