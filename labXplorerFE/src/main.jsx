@@ -24,6 +24,7 @@ import LearningAreaScreen from "./Screens/LearningAreaScreen.jsx";
 import AboutScreen from "./Screens/AboutScreen.jsx";
 import CapsulesScreen from "./Screens/CapsulesScreen.jsx";
 import SingleCapsuleScreen from "./Screens/SingleCapsuleScreen.jsx";
+import DonateScreen from "./Screens/DonateScreen.jsx";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -32,6 +33,7 @@ const router = createBrowserRouter(
       <Route path="register" element={<Register />} />
       <Route path="profile" element={<ProfileScreen />} />
       <Route path="about" element={<AboutScreen />} />
+      <Route path="donate" element={<DonateScreen/>}/>
       <Route path="sims/" element={<LabScreen />}>
         <Route path="gravity" element={<GravitySim />} />
       </Route>

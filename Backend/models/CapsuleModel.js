@@ -1,19 +1,19 @@
 import { pool } from "../config/db.js";
 
-export const insertCapsule = async (title, description, content, category, thumbnailUrl, imagesUrls) => {
+export const insertCapsule = async (title, description, content, category, thumbnailUrl, imagesUrls, pdf, author_id) => {
   try {
     // Convert images array to a PostgreSQL array string
-    const imagesArray = imagesUrls ? `{${imagesUrls.join(',')}}` : '{}';
+    const imagesArray = imagesUrls.length ? `{${imagesUrls.join(',')}}` : '{}';
 
     // Prepare the SQL query with parameter placeholders
     const query = `
-      INSERT INTO capsules (title, description, content, category, thumbnail, images)
-      VALUES ($1, $2, $3, $4, $5, $6)
+      INSERT INTO capsules (title, description, content, category, thumbnail, images, pdf, author_id)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
       RETURNING *;
     `;
 
     // Execute the query with parameters
-    const result = await pool.query(query, [title, description, content, category, thumbnailUrl, imagesArray]);
+    const result = await pool.query(query, [title, description, content, category, thumbnailUrl, imagesArray, pdf, author_id]);
 
     return result.rows[0];
   } catch (err) {
@@ -21,6 +21,7 @@ export const insertCapsule = async (title, description, content, category, thumb
     return undefined;
   }
 };
+
 
 //Reads Capsules from the db and return only general information
 export const readCapsulesByCategoryWithLimit=async(category,limit)=>{

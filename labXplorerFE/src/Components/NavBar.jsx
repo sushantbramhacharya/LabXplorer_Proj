@@ -71,8 +71,8 @@ const NavBar = () => {
             </button>
             
           </div>
-          <Link to='/discussions' className='font-semibold'>
-            Discussions
+          <Link to='/donate' className='font-semibold'>
+            Donate
             </Link>
             <Link to='/about' className='font-semibold'>
             About LabXplorer

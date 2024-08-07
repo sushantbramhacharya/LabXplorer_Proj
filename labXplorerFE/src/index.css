@@ -242,4 +242,15 @@ img,svg,span{
   stroke: #ccc !important;
 }
 
+.ql-container {
+  font-family: 'Poppins', sans-serif;
+}
+
+.ql-editor {
+  font-size: 18px; /* Adjust the font size as needed */
+}
+
+.ql-toolbar {
+  font-family: 'Poppins', sans-serif;
+}
 

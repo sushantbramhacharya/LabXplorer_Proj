@@ -6,5 +6,5 @@ const router=Router();
 
 
 //change tis to capsules later
-router.route('/add').post(userOnly,upload.fields([{ name: 'thumbnail' }, { name: 'images' }]),addCapsule);
+router.route('/add').post(userOnly,upload.fields([{ name: 'thumbnail' }, { name: 'images' },{ name: 'pdf' }]),addCapsule);
 export default router;
