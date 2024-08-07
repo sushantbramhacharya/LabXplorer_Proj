@@ -23,6 +23,7 @@ import GravitySim from "./Components/Labs/PhysicsSim/GravitySim.jsx";
 import LearningAreaScreen from "./Screens/LearningAreaScreen.jsx";
 import AboutScreen from "./Screens/AboutScreen.jsx";
 import CapsulesScreen from "./Screens/CapsulesScreen.jsx";
+import SingleCapsuleScreen from "./Screens/SingleCapsuleScreen.jsx";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -36,6 +37,7 @@ const router = createBrowserRouter(
       </Route>
       <Route path="learning-area" element={<LearningAreaScreen />} />
       <Route path="capsules/:category" element={<CapsulesScreen/>}/>
+      <Route path="capsule/:id" element={<SingleCapsuleScreen/>}/>
       <Route path="admin/" element={<AdminScreen />}>
         <Route path="" element={<MainScreen />} />
         <Route path="add" element={<AddCapsules />} />

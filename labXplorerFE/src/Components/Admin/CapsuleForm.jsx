@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // Import the Quill styles
 
@@ -11,7 +11,14 @@ const CapsuleForm = ({ capsule, onSave, onCancel }) => {
     category: capsule ? capsule.category : '',
     thumbnail: '',
     images: [],
+    pdf: '',
   });
+
+  const [htmlContent, setHtmlContent] = useState(formData.content);
+
+  useEffect(() => {
+    setHtmlContent(formData.content);
+  }, [formData.content]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,16 +38,34 @@ const CapsuleForm = ({ capsule, onSave, onCancel }) => {
     } else if (name === 'images') {
       const filesArray = Array.from(files).map(file => URL.createObjectURL(file));
       setFormData({ ...formData, images: filesArray });
+    } else if (name === 'pdf') {
+      if (files[0]) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setFormData({ ...formData, pdf: reader.result });
+        };
+        reader.readAsDataURL(files[0]);
+      }
     }
   };
 
   const handleQuillChange = (value) => {
     setFormData({ ...formData, content: value });
+    setHtmlContent(value); // Update HTML content when Quill changes
+  };
+
+  const validateForm = () => {
+    const { title, description, content, category } = formData;
+    return title && description && content && category;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSave(formData);
+    if (validateForm()) {
+      onSave(formData);
+    } else {
+      alert('Please fill in all required fields.');
+    }
   };
 
   return (
@@ -51,13 +76,16 @@ const CapsuleForm = ({ capsule, onSave, onCancel }) => {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="mb-4">
-            <label htmlFor="category" className="block text-gray-300 text-lg font-semibold pb-2">Category</label>
+            <label htmlFor="category" className="block text-gray-300 text-lg font-semibold pb-2">
+              Category <span className="text-red-500">*</span>
+            </label>
             <select
               id="category"
               name="category"
               className="p-3 border border-gray-600 rounded-lg w-full bg-gray-700 text-white"
               value={formData.category}
               onChange={handleChange}
+              required
             >
               <option value="">Select Category</option>
               <option value="Chemistry">Chemistry</option>
@@ -68,7 +96,9 @@ const CapsuleForm = ({ capsule, onSave, onCancel }) => {
             </select>
           </div>
           <div className="mb-4">
-            <label htmlFor="title" className="block text-gray-300 text-lg font-semibold pb-2">Title</label>
+            <label htmlFor="title" className="block text-gray-300 text-lg font-semibold pb-2">
+              Title <span className="text-red-500">*</span>
+            </label>
             <input
               type="text"
               id="title"
@@ -76,20 +106,26 @@ const CapsuleForm = ({ capsule, onSave, onCancel }) => {
               className="p-3 border border-gray-600 rounded-lg w-full bg-gray-700 text-white"
               value={formData.title}
               onChange={handleChange}
+              required
             />
           </div>
           <div className="mb-4 col-span-2">
-            <label htmlFor="description" className="block text-gray-300 text-lg font-semibold pb-2">Description</label>
+            <label htmlFor="description" className="block text-gray-300 text-lg font-semibold pb-2">
+              Description <span className="text-red-500">*</span>
+            </label>
             <textarea
               id="description"
               name="description"
               className="p-3 border border-gray-600 rounded-lg w-full bg-gray-700 text-white h-24 resize-none" // Smaller height
               value={formData.description}
               onChange={handleChange}
+              required
             ></textarea>
           </div>
           <div className="mb-4 col-span-2">
-            <label htmlFor="thumbnail" className="block text-gray-300 text-lg font-semibold pb-2">Thumbnail</label>
+            <label htmlFor="thumbnail" className="block text-gray-300 text-lg font-semibold pb-2">
+              Thumbnail
+            </label>
             <input
               type="file"
               id="thumbnail"
@@ -107,7 +143,9 @@ const CapsuleForm = ({ capsule, onSave, onCancel }) => {
             )}
           </div>
           <div className="mb-4 col-span-2">
-            <label htmlFor="images" className="block text-gray-300 text-lg font-semibold pb-2">Images</label>
+            <label htmlFor="images" className="block text-gray-300 text-lg font-semibold pb-2">
+              Images
+            </label>
             <input
               type="file"
               id="images"
@@ -129,7 +167,29 @@ const CapsuleForm = ({ capsule, onSave, onCancel }) => {
             </div>
           </div>
           <div className="mb-4 col-span-2">
-            <label htmlFor="content" className="block text-gray-300 text-lg font-semibold mb-2">Content</label>
+            <label htmlFor="pdf" className="block text-gray-300 text-lg font-semibold pb-2">
+              Include PDF Document
+            </label>
+            <input
+              type="file"
+              id="pdf"
+              name="pdf"
+              className="p-3 border border-gray-600 rounded-lg w-full bg-gray-700 text-white"
+              onChange={handleFileChange}
+              accept="application/pdf"
+            />
+            {formData.pdf && (
+              <iframe
+                src={formData.pdf}
+                className="mt-4 w-full h-60"
+                title="PDF Preview"
+              ></iframe>
+            )}
+          </div>
+          <div className="mb-4 col-span-2">
+            <label htmlFor="content" className="block text-gray-300 text-lg font-semibold mb-2">
+              Content <span className="text-red-500">*</span>
+            </label>
             <ReactQuill
               value={formData.content}
               onChange={handleQuillChange}
