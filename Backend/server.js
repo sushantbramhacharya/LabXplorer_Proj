@@ -1,6 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 //Router Imports
 import UserRouter from './routes/UserRoute.js'
@@ -28,6 +30,12 @@ import { errorHandler } from './middleware/errorHandler.js';
 app.use('/api/user',UserRouter)
 app.use('/api/admin',AdminRouter)
 app.use('/api/capsule',CapsuleRouter)
+
+//photo serving
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+// Middleware to serve static files from the 'uploads' directory
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use(errorHandler);
 

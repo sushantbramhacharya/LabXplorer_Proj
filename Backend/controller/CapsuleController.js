@@ -4,12 +4,15 @@ import { deleteCapsuleById,
      readCapsulesByCategoryWithLimit, 
      updateCapsuleById } 
      from '../models/CapsuleModel.js'
+import { capitalizeFirstLetter } from '../utils/SomeUitls.js'
 
 
 export const getCapsulesByCategory=asyncHandler(
     async(req,res,next)=>{
-        const {category}=req.body
-        const capsules=await readCapsulesByCategoryWithLimit(category,5)
+        const {category}=req.query
+        const cat=capitalizeFirstLetter(category)
+        
+        const capsules=await readCapsulesByCategoryWithLimit(cat,5)
         if(capsules[0]?.id)
         {
             res.json(capsules)
@@ -22,7 +25,7 @@ export const getCapsulesByCategory=asyncHandler(
 
 export const getCapsulesById=asyncHandler(
     async(req,res,next)=>{
-        const {capsuleId}=req.body
+        const {capsuleId}=req.query
         const capsule=await readCapsuleById(capsuleId)
         if(capsule?.id)
         {

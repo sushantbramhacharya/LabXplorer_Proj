@@ -1,18 +1,20 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import NavBar from '../Components/NavBar';
+import {useCapsulesByCategoryQuery } from '../api/capsuleApi';
+import { BASE_UPLOAD_URL, BASE_URL } from '../constants';
 
 const CapsulesScreen = () => {
-  const {category}=useParams()
+  const { category } = useParams();
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
-  const capsules = [
-    { name: 'Biology', description: 'Explore the living world with interactive biology capsules.', image: 'https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg', path: '/biology' },
-    { name: 'Mathematics', description: 'Dive into the world of numbers with engaging math capsules.', image: 'https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg', path: '/mathematics' },
-    { name: 'Computer Science', description: 'Learn the basics of computing with hands-on activities.', image: 'https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg', path: '/computer-science' },
-    { name: 'Geography', description: 'Discover the Earth with interactive geography capsules.', image: 'https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg', path: '/geography' },
-  ];
+
+  // Fetch capsules based on the category
+  const { data: capsules, error, isLoading } = useCapsulesByCategoryQuery({ category });
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error fetching Capsules{error.message}</div>;
 
   return (
     <>
@@ -24,10 +26,10 @@ const CapsulesScreen = () => {
 
         <div className="space-y-4 bg-slate-700 py-5 rounded-lg">
           {capsules.map((capsule) => (
-            <div key={capsule.name} className="flex w-2/3 mx-auto items-center rounded-lg shadow-lg overflow-hidden">
-              <img src={capsule.image} alt={capsule.name} className="w-1/3 h-48 object-cover" />
+            <div key={capsule.title} className="flex w-2/3 mx-auto items-center rounded-lg shadow-lg overflow-hidden">
+              <img src={BASE_UPLOAD_URL+capsule.thumbnail} alt={capsule.title} className="w-1/3 h-48 object-cover" />
               <div className="w-2/3 p-4">
-                <h2 className="text-2xl font-bold">{capsule.name}</h2>
+                <h2 className="text-2xl font-bold">{capsule.title}</h2>
                 <p className="text-gray-200 mt-2">{capsule.description}</p>
                 <Link to={capsule.path}>
                   <button className="mt-4 px-4 py-2 bg-slate-700 text-white rounded hover:bg-slate-900">Explore</button>
@@ -39,6 +41,6 @@ const CapsulesScreen = () => {
       </div>
     </>
   );
-}
+};
 
 export default CapsulesScreen;
