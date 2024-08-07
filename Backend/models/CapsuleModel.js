@@ -46,3 +46,29 @@ export const readCapsuleById=async(id)=>
     return undefined;
   }
 }
+
+//Delete Capsules by Id
+export const deleteCapsuleById=async(id)=>{
+  try{
+    const result=await pool.query(`DELETE FROM capsules WHERE id = ${id}`)
+    return result
+  }
+  catch(err)
+  {
+    console.error("Error Deleting Capsule by id ",err)
+    return undefined
+  }
+}
+
+//Update Capsule by Id and Column Name
+export const updateCapsuleById=async(id,col,val)=>{
+  try{
+    const result=await pool.query(`UPDATE capsules SET ${col}='${val}' WHERE id=${id}`)
+    return result
+  }
+  catch(err)
+  {
+    console.error("Error Updating Capsule by id ",err)
+    return undefined
+  }
+}

@@ -32,3 +32,32 @@ export const userOnly=asyncHandler(async (req,res,next)=>{
         throw new Error("Not Authorized")
     }
 })
+
+
+export const adminOnly=asyncHandler(async (req,res,next)=>{
+    const token=req.cookies.jwt;
+    if(token)
+    {
+        try{
+            const decoded=jwt.verify(token,process.env.JWT_KEY);
+            req.user=await getUserById(decoded.userId);
+            if(req.user.email==='admin@labxplorer.com')
+            {
+                next();
+            }
+            else{
+                res.status(401)
+                throw new Error("User Not Found")
+            }
+        }
+        catch(err)
+        {
+            res.status(401)
+            throw new Error("Invalid Token")
+        }
+    }
+    else{
+        res.status(404)
+        throw new Error("Not Authorized")
+    }
+})
