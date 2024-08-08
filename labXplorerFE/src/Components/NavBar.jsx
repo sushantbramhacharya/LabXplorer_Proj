@@ -28,7 +28,7 @@ const NavBar = () => {
     .then(() => {
       // Notify success
       toast.success("Logout Successful");
-      
+      location.href='/'
       navigate('/');
     })
     .catch((error) => {
@@ -87,12 +87,21 @@ const NavBar = () => {
           >
             <span>Login</span>
           </Link>:
+          <>
           <a
           onClick={logoutHandler}
           className="lg:inline-block lg:w-auto w-full px-3 py-2 rounded-xl text-gray-300 items-center justify-center bg-red-600 hover:bg-red-700 hover:text-white"
         >
           <span>Logout</span>
-        </a>}
+        </a>
+       
+        </>}
+        {user?.email=="admin@labxplorer.com"?<Link
+          to='/admin'
+          className="lg:inline-block lg:w-auto w-full px-3 py-2 rounded-xl text-gray-300 items-center justify-center bg-green-600 hover:bg-green-700 hover:text-white"
+        >
+          <span>Admin</span>
+        </Link>:<></>}
         </div>
       </div>
     </nav>

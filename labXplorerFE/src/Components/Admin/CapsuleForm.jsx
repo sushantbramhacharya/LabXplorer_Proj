@@ -89,10 +89,10 @@ const CapsuleForm = ({ capsule, onSave, onCancel }) => {
             >
               <option value="">Select Category</option>
               <option value="Chemistry">Chemistry</option>
-              <option value="Electronics">Electronics</option>
+              <option value="Cs">Computer Science</option>
               <option value="Physics">Physics</option>
               <option value="Astronomy">Astronomy</option>
-              {/* Add more categories as needed */}
+              {/* Add more categories as needed */} 
             </select>
           </div>
           <div className="mb-4">

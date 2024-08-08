@@ -5,6 +5,7 @@ import { useDispatch,useSelector } from 'react-redux';
 import { useLoginMutation } from "../api/userApi";
 import { setCredentials } from '../Slices/userSlice';
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -33,7 +34,8 @@ export default function Login() {
       if(user)
       {
         dispatch(setCredentials({...user}));
-        alert("Yay logged in")
+        
+        toast.success('Login successful!');
         navigator('/profile')
       }
     }catch(err)

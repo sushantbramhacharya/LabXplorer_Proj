@@ -41,8 +41,8 @@ export const AddCapsules = () => {
         },
       });
 
-      // Assuming `onSave` here is a prop function or a callback to handle success
-      onSave(response.data);
+      
+      location.href='/'
     } catch (error) {
       console.error('Error saving capsule:', error);
     }

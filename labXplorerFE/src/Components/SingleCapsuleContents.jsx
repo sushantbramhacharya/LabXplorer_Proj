@@ -5,6 +5,7 @@ import "react-quill/dist/quill.snow.css"; // Import Quill styles
 
 import { useCapsuleByIdQuery } from "../api/capsuleApi"; // Adjust the path
 import { BASE_UPLOAD_URL } from "../constants";
+import { Link } from "react-router-dom";
 
 const SingleCapsuleContents = ({id}) => {
 
@@ -41,8 +42,9 @@ const SingleCapsuleContents = ({id}) => {
       <NavBar />
       <div className="bg-slate-700 m-10 p-16 rounded-lg">
         {/* Heading with Scoped Styles */}
-        <h1 className="text-slate-300 text-3xl font-bold bg-transparent">
+        <h1 className="text-slate-300 my-6 text-3xl font-bold bg-transparent">
           {capsule.title}
+        <Link to={'/quiz/'+capsule.id} className="p-2 float-right bg-slate-800 rounded-lg hover:bg-slate-600">Launch Quiz</Link>
         </h1>
         <hr className="my-2 border-t border-gray-500" />
         <p className="text-slate-400 text-xl italic bg-transparent">

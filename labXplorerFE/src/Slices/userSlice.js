@@ -11,6 +11,7 @@ const userSlice=createSlice({
         logoutUser:(state,action)=>{
             state.user=undefined
             localStorage.removeItem('user')
+            location.href='/'
         }
     }
 })

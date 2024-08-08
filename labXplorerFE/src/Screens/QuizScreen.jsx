@@ -53,13 +53,14 @@ const QuizScreen = () => {
   return (
     <>
     <div className="p-6 mx-4 sm:mx-6 md:mx-8 lg:mx-12 xl:mx-20">
+    <h1 className='text-4xl font-semibold text-center mb-10 underline'>Welcome to LabXplorer Quiz</h1>
       {showResult ? (
-        <div className="bg-slate-600 p-4 rounded-lg shadow-md">
+        <div className="bg-transparent p-4 rounded-lg shadow-md">
           <h2 className="text-2xl font-bold mb-4">Quiz Result</h2>
           <p className="text-lg">Your score: {score} / {quizzes.length}</p>
         </div>
       ) : (
-        <div className="bg-slate-600 p-4 rounded-lg shadow-md">
+        <div className="bg-transparent p-4 rounded-lg shadow-md">
           <h2 className="text-2xl font-bold mb-4">{currentQuiz.title}</h2>
           <div className="space-y-4">
             {currentQuiz.options.map((option, index) => (
@@ -67,7 +68,7 @@ const QuizScreen = () => {
                 key={index}
                 onClick={() => handleAnswerSelection(option.option_text)}
                 className={`block w-full text-left p-2 border rounded-md ${
-                  selectedAnswer === option.option_text ? 'bg-blue-500 text-white' : 'bg-gray-200'
+                  selectedAnswer === option.option_text ? 'bg-blue-500 text-white' : 'bg-slate-900'
                 }`}
               >
                 {option.option_text}
@@ -76,7 +77,7 @@ const QuizScreen = () => {
           </div>
           <button
             onClick={handleNextQuestion}
-            className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300"
+            className="mt-4 bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 transition duration-300"
           >
             {currentQuizIndex < quizzes.length - 1 ? 'Next' : 'Submit'}
           </button>
