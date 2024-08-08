@@ -37,6 +37,9 @@ const __dirname = path.dirname(__filename);
 // Middleware to serve static files from the 'uploads' directory
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// Middleware to serve static HTML files from the 'simulations' directory
+app.use('/simulations', express.static(path.join(__dirname, 'simulations')));
+
 app.use(errorHandler);
 
 app.listen(port,()=>{
