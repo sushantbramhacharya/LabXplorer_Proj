@@ -73,3 +73,56 @@ export const updateCapsuleById=async(id,col,val)=>{
     return undefined
   }
 }
+
+
+//getQuiz
+export const readQuizById = async (id) => {
+  try {
+    const result = await pool.query('SELECT * FROM quizzes WHERE capsule_id = $1', [id]);
+    return result.rows; 
+  } catch (err) {
+    console.error('Error reading quiz by id', err);
+    return undefined;
+  }
+};
+
+//getOptions
+export const getOptionsById=async (id) => {
+  try {
+    
+    const result = await pool.query('SELECT * FROM options WHERE quiz_id = $1', [id]);
+    return result.rows; 
+  } catch (err) {
+    console.error('Error reading quiz by id', err);
+    return undefined;
+  }
+};
+
+// Insert into Quiz
+export const addQuiz = async (quizData) => {
+  try {
+    const { title, capsule_id } = quizData;
+    const result = await pool.query(
+      'INSERT INTO quizzes (title, capsule_id) VALUES ($1, $2) RETURNING id',
+      [title, capsule_id]
+    );
+    return result.rows[0].id; // Return the newly created quiz id
+  } catch (err) {
+    console.error('Error adding quiz', err);
+    throw new Error('Error adding quiz');
+  }
+};
+
+export const addOptionsForQuiz = async (quizId, options) => {
+  try {
+    const query = `
+      INSERT INTO options (quiz_id, option_text, is_correct)
+      VALUES ${options.map((_, index) => `($1, $${index + 2}, $${options.length + 2})`).join(', ')}
+    `;
+    const values = [quizId, ...options.map(option => option.option_text), ...options.map(option => option.is_correct)];
+    await pool.query(query, values);
+  } catch (err) {
+    console.error('Error adding options for quiz', err);
+    throw new Error('Error adding options for quiz');
+  }
+};

@@ -30,6 +30,9 @@ import SimulatorsScreen from "./Screens/SimulatorsScreen.jsx";
 import SolarSystemSimulator from "./Components/Simulations/AstronomySims/SolarSystemSimulator.jsx";
 import OhmsLawSimulator from "./Components/Simulations/ElectronicsSims/OhmsLawSimulator.jsx";
 import JSCodeEditor from "./Components/Simulations/ComputerSims/JavaScriptEditor.jsx";
+import SimulationScreen from "./Screens/AdminScreens/SimulationScreen.jsx";
+import AddQuizScreen from "./Screens/AdminScreens/AddQuizScreen.jsx";
+import QuizScreen from "./Screens/QuizScreen.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -40,8 +43,10 @@ const router = createBrowserRouter(
       <Route path="profile" element={<ProfileScreen />} />
       <Route path="about" element={<AboutScreen />} />
       <Route path="donate" element={<DonateScreen/>}/>
+      <Route path="/simulations" element={<SimulationScreen/>}/>
+      <Route path="quiz/:capsuleId" element={<QuizScreen/>}/>
       <Route path="sims/" element={<LabScreen />}>
-        <Route path="" element={<SimulatorsScreen/>}/>
+        <Route path='' element={<SimulatorsScreen/>}/>
         <Route path="gravity" element={<GravitySim />} />
         <Route path="atom" element={<AtomSimulator/>}/>
         <Route path="solarsystem" element={<SolarSystemSimulator/>}/>
@@ -54,6 +59,8 @@ const router = createBrowserRouter(
       <Route path="admin/" element={<AdminScreen />}>
         <Route path="" element={<MainScreen />} />
         <Route path="add" element={<AddCapsules />} />
+        <Route path="simulation" element={<SimulationScreen/>}/>
+        <Route path="add-quiz" element={<AddQuizScreen/>}/>
       </Route>
     </Route>
   )

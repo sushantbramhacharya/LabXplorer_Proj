@@ -71,14 +71,14 @@ const NavBar = () => {
             </button>
             
           </div>
-          <Link to='/donate' className='font-semibold'>
-            Donate
+            <Link to='/simulations' className='font-semibold'>
+            Simulations
             </Link>
             <Link to='/about' className='font-semibold'>
             About LabXplorer
             </Link>
             <Link to='/learning-area' className='font-semibold'>
-            Learning Areas
+            Learning Capsules
             </Link>
           {!user?.username?
           <Link
