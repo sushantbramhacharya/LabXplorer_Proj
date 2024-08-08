@@ -22,6 +22,17 @@ export const insertCapsule = async (title, description, content, category, thumb
   }
 };
 
+//Get Capsules
+export const readAllCapsules=async()=>{
+  try{
+    const result = await pool.query(`SELECT id,title,description,thumbnail FROM capsules ORDER BY id ASC `)
+    return result.rows;
+  }catch(err)
+  {
+    console.error("Error reading capsules by category ",err);
+    return undefined;
+  }
+}
 
 //Reads Capsules from the db and return only general information
 export const readCapsulesByCategoryWithLimit=async(category,limit)=>{

@@ -1,34 +1,17 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import CapsulesHome from '../../Components/Admin/Capsules';
+import { useAllCapsulesQuery } from '../../api/capsuleApi';
 
 export const MainScreen = () => {
-  const [capsules, setCapsules] = useState([
-    {
-      id: 1,
-      title: 'Basic Chemistry',
-      description: 'Learn the fundamentals of chemistry with interactive experiments.',
-      image: 'https://via.placeholder.com/150',
-      category: 'Chemistry',
-    },
-    {
-      id: 2,
-      title: 'Basic Electronics',
-      description: 'Explore basic electronics concepts through hands-on simulations.',
-      image: 'https://via.placeholder.com/150',
-      category: 'Electronics',
-    },
-    {
-      id: 3,
-      title: 'Advanced Electronics',
-      description: 'Deep dive into advanced electronics and circuits.',
-      image: 'https://via.placeholder.com/150',
-      category: 'Electronics',
-    },
-    // Add more capsules as needed
-  ]);
+  const { data: capsules, error, isLoading } = useAllCapsulesQuery();
 
+  // Ensure no hooks are called conditionally or inside functions
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error fetching Capsules: {error.message}</div>;
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
@@ -43,21 +26,12 @@ export const MainScreen = () => {
     // Implement edit functionality
   };
 
-  const handleDelete = (id) => {
-    setCapsules(capsules.filter((capsule) => capsule.id !== id));
-  };
-
-  const handleAddCapsule = () => {
-    console.log('Add new capsule');
-    // Implement functionality to open modal or navigate to add capsule form
-  };
-
-  // Filter capsules based on search query and selected category
-  const filteredCapsules = capsules.filter((capsule) => {
+  // Perform filtering outside of the render method
+  const filteredCapsules = capsules ? capsules.filter((capsule) => {
     const matchesQuery = capsule.title.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = !selectedCategory || capsule.category === selectedCategory;
     return matchesQuery && matchesCategory;
-  });
+  }) : [];
 
   return (
     <>
@@ -84,12 +58,12 @@ export const MainScreen = () => {
           {/* Add more categories as needed */}
         </select>
 
-        <button
-          onClick={handleAddCapsule}
+        <Link
+          to='/admin/add'
           className="bg-blue-500 text-white p-3 rounded-lg shadow hover:bg-blue-600 transition-colors flex-none"
         >
           Add Capsule
-        </button>
+        </Link>
       </div>
       
       <div className='flex flex-wrap m-2 bg-slate-700 justify-center'>
@@ -98,7 +72,6 @@ export const MainScreen = () => {
             key={capsule.id}
             capsule={capsule}
             onEdit={handleEdit}
-            onDelete={handleDelete}
           />
         ))}
       </div>

@@ -10,6 +10,12 @@ export const capsuleApi=api.injectEndpoints({
                 params:data
             })
         }),
+        allCapsules:builder.query({
+            query:()=>({
+                url:BASE_URL+'/capsule/all',
+                method:'GET',
+            })
+        }),
         CapsuleById:builder.query({
             query:(data)=>({
                 url:BASE_URL+'/capsule',
@@ -20,4 +26,4 @@ export const capsuleApi=api.injectEndpoints({
     })
 })
 
-export const {useCapsuleByIdQuery,useCapsulesByCategoryQuery}=capsuleApi
+export const {useCapsuleByIdQuery,useCapsulesByCategoryQuery,useAllCapsulesQuery}=capsuleApi

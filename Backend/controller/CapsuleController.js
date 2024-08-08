@@ -2,6 +2,7 @@ import asyncHandler from "../middleware/asyncHandler.js";
 import {
   deleteCapsuleById,
   getOptionsById,
+  readAllCapsules,
   readCapsuleById,
   readCapsulesByCategoryWithLimit,
   readQuizById,
@@ -9,6 +10,16 @@ import {
 } from "../models/CapsuleModel.js";
 import { capitalizeFirstLetter } from "../utils/SomeUitls.js";
 
+export const getAllCapsules = asyncHandler(async (req, res, next) => {
+  const capsules = await readAllCapsules();
+  if (capsules[0]?.id) {
+    res.json(capsules);
+  } else {
+    throw new Error(
+      "Some Error Happened in retriving Capsules check server log for details"
+    );
+  }
+})
 export const getCapsulesByCategory = asyncHandler(async (req, res, next) => {
   const { category } = req.query;
   const cat = capitalizeFirstLetter(category);

@@ -4,10 +4,10 @@ import NavBar from '../Components/NavBar';
 
 const LearningAreaScreen = () => {
   const categories = [
-    { name: 'Physics', description: 'Explore the fundamentals of physics through interactive experiments.', image: 'https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg', path: '/physics' },
-    { name: 'Chemistry', description: 'Dive into the world of chemistry with engaging simulations.', image: 'https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg', path: '/chemistry' },
-    { name: 'Electronics', description: 'Learn the basics of electronics with hands-on activities.', image: 'https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg', path: '/electronics' },
-    { name: 'Astronomy', description: 'Discover the universe with interactive astronomy simulations.', image: 'https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg', path: '/astronomy' },
+    { name: 'Physics', description: 'Explore the fundamentals of physics through interactive experiments.', image: 'https://miro.medium.com/v2/resize:fit:1024/1*bWlRl9D3jkJR06_oO0cP_Q.png', path: '/physics' },
+    { name: 'Chemistry', description: 'Dive into the world of chemistry with engaging simulations.', image: 'https://images.newscientist.com/wp-content/uploads/2021/02/23162716/chemistry.jpg', path: '/chemistry' },
+    { name: 'Computer Science', description: 'Learn the basics of electronics with hands-on activities.', image: 'https://www.mtu.edu/cs/what/images/what-is-computer-science-banner1600.jpg', path: '/cs' },
+    { name: 'Astronomy', description: 'Discover the universe with interactive astronomy simulations.', image: 'https://static.scientificamerican.com/dam/m/128e9a2bf8a1939/original/DM0HT8_WEB.jpg?w=1200', path: '/astronomy' },
   ];
 
   return (
