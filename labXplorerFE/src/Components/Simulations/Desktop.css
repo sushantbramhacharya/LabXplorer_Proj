@@ -1,0 +1,13 @@
+/* DesktopViewComponent.css */
+.body {
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow-x: auto;
+  }
+  
+  @media only screen and (max-width: 1200px) {
+    .body {
+      width: 1200px;
+    }
+  }
+  

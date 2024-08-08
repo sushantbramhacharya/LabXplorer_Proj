@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import NavBar from '../Components/NavBar';
-import ChemistryLab from '../Components/Labs/PhysicsSim/GravitySim';
+import '../Components/Simulations/Desktop.css'
 import Descriptor from '../Components/Descriptor';
 import { Outlet } from 'react-router-dom';
 
@@ -39,7 +39,7 @@ const LabScreen = () => {
     
     return(<>
     <NavBar/>
-    <h1 className='text-center text-2xl p-3 italic'>Gravity Simulator</h1>
+    
     <div className='flex justify-center '>
     <Outlet/>
     {/* <Descriptor
