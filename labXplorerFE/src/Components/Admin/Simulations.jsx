@@ -18,7 +18,7 @@ const SimulationList = ({ simulations }) => {
               {sim.link}
             </a>
             <div className="mt-2 bg-transparent">
-              <span className="bg-transparent bg-gray-200 text-gray-700 py-1 px-3 rounded-full text-sm">
+              <span className="bg-gray-200 text-gray-700 py-1 px-3 rounded-full text-sm">
                 {sim.category}
               </span>
             </div>
