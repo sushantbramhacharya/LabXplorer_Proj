@@ -53,7 +53,7 @@ const QuizScreen = () => {
   return (
     <>
     <div className="p-6 mx-4 sm:mx-6 md:mx-8 lg:mx-12 xl:mx-20">
-    <h1 className='text-4xl font-semibold text-center mb-10 underline'>Welcome to LabXplorer Quiz</h1>
+    <h1 className='text-4xl font-semibold text-center mb-10 underline'>Welcome to LabXplorerX Quiz</h1>
       {showResult ? (
         <div className="bg-transparent p-4 rounded-lg shadow-md">
           <h2 className="text-2xl font-bold mb-4">Quiz Result</h2>

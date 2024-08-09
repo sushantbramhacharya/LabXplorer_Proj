@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "frontend": "npm run dev --prefix labXplorerFE",
+    "frontend": "npm run dev --prefix LabXplorerXFE",
     "backend": "npm run dev --prefix Backend",
     "dev": "concurrently \"npm run frontend\" \"npm run backend\""
   },

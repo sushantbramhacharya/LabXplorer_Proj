@@ -44,7 +44,7 @@ const NavBar = () => {
       <Link to="/" className="p-2 mr-4 inline-flex items-center">
        <img className='mr-4' src='/logo.png' width={40} height={40}/>
         <span className="text-xl text-white font-bold tracking-wide">
-          LabXplorer
+          LabXplorerX
         </span>
       </Link>
       <button
@@ -75,7 +75,7 @@ const NavBar = () => {
             Simulations
             </Link>
             <Link to='/about' className='font-semibold'>
-            About LabXplorer
+            About LabXplorerX
             </Link>
             <Link to='/learning-area' className='font-semibold'>
             Learning Capsules
@@ -96,7 +96,7 @@ const NavBar = () => {
         </a>
        
         </>}
-        {user?.email=="admin@labxplorer.com"?<Link
+        {user?.email=="admin@labxplorerx.com"?<Link
           to='/admin'
           className="lg:inline-block lg:w-auto w-full px-3 py-2 rounded-xl text-gray-300 items-center justify-center bg-green-600 hover:bg-green-700 hover:text-white"
         >

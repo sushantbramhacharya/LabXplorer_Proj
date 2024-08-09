@@ -15,7 +15,7 @@ class LabScene extends Phaser.Scene {
         this.add.image(400, 300, 'background');
 
         this.add.rectangle(0, 0, 800, 50, 0x333333).setOrigin(0, 0); // Dark background for the top bar
-        this.add.text(10, 25, 'LabXplorer Chemistry Lab', {
+        this.add.text(10, 25, 'LabXplorerX Chemistry Lab', {
             font: '24px Arial',
             fill: '#ffffff'
         }).setOrigin(0, 0.5); // Center the text in the top bar

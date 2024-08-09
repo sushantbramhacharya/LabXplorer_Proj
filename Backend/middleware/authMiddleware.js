@@ -41,7 +41,7 @@ export const adminOnly=asyncHandler(async (req,res,next)=>{
         try{
             const decoded=jwt.verify(token,process.env.JWT_KEY);
             req.user=await getUserById(decoded.userId);
-            if(req.user.email==='admin@labxplorer.com')
+            if(req.user.email==='admin@LabXplorerX.com')
             {
                 next();
             }

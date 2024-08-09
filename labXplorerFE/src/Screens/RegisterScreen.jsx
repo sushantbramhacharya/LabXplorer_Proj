@@ -63,7 +63,7 @@ export default function Register() {
         <div>
           <img src='/logo.png' width={40} height={40}/>
         </div>
-        LabXplorer
+        LabXplorerX
       </Link>
       <div className="relative mt-12 w-full max-w-lg sm:mt-10">
         <div className="relative -mb-px h-px w-full bg-gradient-to-r from-transparent via-sky-300 to-transparent"></div>
@@ -73,7 +73,7 @@ export default function Register() {
               Register
             </h3>
             <p className="mt-1.5 text-sm font-medium text-white/50">
-              New to LabXplorer!! Create an Account to continue
+              New to LabXplorerX!! Create an Account to continue
             </p>
           </div>
           <div className="p-6 pt-0">

@@ -63,7 +63,7 @@ const CodeEditor = () => {
 
   return (
     <div className="flex flex-col items-center p-6 bg-slate-600 rounded-lg shadow-lg w-full max-w-4xl mx-auto mt-8">
-        <h1 className='bg-transparent text-2xl italic font-semibold mb-2'>LabXplorer JavaScript Editor</h1>
+        <h1 className='bg-transparent text-2xl italic font-semibold mb-2'>LabXplorerX JavaScript Editor</h1>
       <textarea
         className="w-full h-64 border border-gray-300 rounded-md p-2 mb-4 font-mono text-lg resize-none"
         value={code}
