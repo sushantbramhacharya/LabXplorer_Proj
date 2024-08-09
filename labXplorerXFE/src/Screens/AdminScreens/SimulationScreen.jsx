@@ -39,7 +39,7 @@ const SimulationScreen = () => {
     <NavBar/>
     
     <div className="p-6 mx-4 sm:mx-6 md:mx-8 lg:mx-12 xl:mx-20">
-      {user?<button
+      {user?.email==="admin@labxplorerx.com"?<button
         onClick={handleOpenModal}
         className="bg-slate-500 float-right text-white py-2 px-4 rounded-md hover:bg-slate-600 transition duration-300"
       >
