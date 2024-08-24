@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { CiSearch } from "react-icons/ci";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch,useSelector } from 'react-redux';
 import { logoutUser } from '../Slices/userSlice';
 import { ToastContainer,toast } from 'react-toastify';
@@ -10,6 +10,7 @@ import { BASE_URL } from '../constants';
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const navigate=useNavigate();
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
@@ -17,7 +18,11 @@ const NavBar = () => {
   const dispatch=useDispatch();
   const {user} = useSelector((state)=>state.userSlice);
 
-  
+  const [searchQuery,setSearchQuery]=useState("")
+
+  const onSearch=()=>{
+    navigate('/search/'+searchQuery);
+  }
 
   const logoutHandler=async(e)=>{
     e.preventDefault()
@@ -65,9 +70,10 @@ const NavBar = () => {
               type="text"
               placeholder="Search Here..."
               className="w-full px-4 py-2 rounded-xl outline-none text-gray-800 bg-gray-300 placeholder-gray-500"
+              onChange={(e)=>{setSearchQuery(e.target.value)}}
             />
             <button className="absolute right-0 top-0 mt-4 mr-5 text-gray-400 hover:text-gray-600">
-            <CiSearch size={25} fill='black'/>
+            <CiSearch size={25} fill='black' onClick={onSearch}/>
             </button>
             
           </div>

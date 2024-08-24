@@ -35,6 +35,7 @@ import AddQuizScreen from "./Screens/AdminScreens/AddQuizScreen.jsx";
 import QuizScreen from "./Screens/QuizScreen.jsx";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import SearchResultsScreen from "./Screens/SearchResultsScreen.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -47,6 +48,7 @@ const router = createBrowserRouter(
       <Route path="donate" element={<DonateScreen/>}/>
       <Route path="/simulations" element={<SimulationScreen/>}/>
       <Route path="quiz/:capsuleId" element={<QuizScreen/>}/>
+      <Route path="search/:searchName" element={<SearchResultsScreen/>}/>
       <Route path="sims/" element={<LabScreen />}>
         <Route path='' element={<SimulatorsScreen/>}/>
         <Route path="gravity" element={<GravitySim />} />

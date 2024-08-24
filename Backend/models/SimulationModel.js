@@ -36,3 +36,17 @@ export const insertSimulations=async(name,description,link,category)=>{
         return undefined
     }
 }
+
+export const readSimulationsByName=async(simName)=>{
+    try{
+        const query = `SELECT * FROM simulations WHERE LOWER(TRIM(name)) LIKE LOWER(TRIM($1))`;
+        const values = [`%${simName}%`];
+        const result = await pool.query(query, values);
+        return result.rows
+    }
+    catch(err)
+    {
+        console.error("Error occured while Searching for simulations ",simName,err);
+        return undefined
+    }
+}

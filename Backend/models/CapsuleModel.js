@@ -59,6 +59,22 @@ export const readCapsuleById=async(id)=>
   }
 }
 
+//Read Capsule By Name
+export const readCapsuleByName=async(capName)=>
+{
+  try{
+    const query = `SELECT * FROM capsules WHERE LOWER(TRIM(title)) LIKE LOWER(TRIM($1))`;
+    const values = [`%${capName}%`];
+    const result = await pool.query(query, values);
+    return result.rows;
+  }
+  catch (err)
+  {
+    console.error("Errot Searching for "+capName+"  ERR:"+err);
+    return undefined
+  }
+}
+
 //Delete Capsules by Id
 export const deleteCapsuleById=async(id)=>{
   try{
@@ -137,3 +153,4 @@ export const addOptionsForQuiz = async (quizId, options) => {
     throw new Error('Error adding options for quiz');
   }
 };
+

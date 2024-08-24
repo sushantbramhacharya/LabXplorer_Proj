@@ -44,7 +44,9 @@ const SingleCapsuleContents = ({id}) => {
         {/* Heading with Scoped Styles */}
         <h1 className="text-slate-300 my-6 text-3xl font-bold bg-transparent">
           {capsule.title}
-        <Link to={'/quiz/'+capsule.id} className="p-2 float-right bg-slate-800 rounded-lg hover:bg-slate-600">Launch Quiz</Link>
+          {capsule.hasQuiz?
+          <Link to={'/quiz/'+capsule.id} className="p-2 float-right bg-slate-800 rounded-lg hover:bg-slate-600">Launch Quiz</Link>:""}
+        
         </h1>
         <hr className="my-2 border-t border-gray-500" />
         <p className="text-slate-400 text-xl italic bg-transparent">

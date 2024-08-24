@@ -38,7 +38,13 @@ export const getCapsulesById = asyncHandler(async (req, res, next) => {
   const { capsuleId } = req.query;
   const capsule = await readCapsuleById(capsuleId);
   if (capsule?.id) {
-    res.json(capsule);
+    const quizes=await readQuizById(capsule.id);
+    let hasQuiz;
+    if(quizes.length>0)
+    {
+      hasQuiz=true
+    }
+    res.json({...capsule,hasQuiz});
   } else {
     throw new Error(
       "Some Error Happened while retriving Capsule check Server log for details"

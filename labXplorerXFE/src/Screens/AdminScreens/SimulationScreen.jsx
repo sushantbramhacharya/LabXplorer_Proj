@@ -18,13 +18,9 @@ const SimulationScreen = () => {
 
   const handleFormSubmit = async (formData) => {
     try {
-      // Send formData to the server
-      await setSimulation(formData).unwrap(); // Post new simulation
-
-      // Refetch simulations to get updated data
+      await setSimulation(formData).unwrap();
       refetch();
 
-      // Close the modal
       handleCloseModal();
     } catch (error) {
       console.error('Failed to save simulation: ', error);
@@ -50,7 +46,7 @@ const SimulationScreen = () => {
       {isModalOpen && (
         <SimulationForm onClose={handleCloseModal} onSubmit={handleFormSubmit} />
       )}
-
+<h2 className="text-2xl font-bold mb-4">Simulations List</h2>
       <SimulationList simulations={simulations} />
     </div>
 
