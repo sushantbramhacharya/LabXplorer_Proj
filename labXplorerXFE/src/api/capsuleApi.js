@@ -23,7 +23,14 @@ export const capsuleApi=api.injectEndpoints({
                 params:data
             })
         }),
+        deleteCapsule:builder.mutation({
+            query:(data)=>({
+                url:BASE_URL+"/capsule/delete",
+                method:"DELETE",
+                body:data
+            })
+        })
     })
 })
 
-export const {useCapsuleByIdQuery,useCapsulesByCategoryQuery,useAllCapsulesQuery}=capsuleApi
+export const {useCapsuleByIdQuery,useCapsulesByCategoryQuery,useAllCapsulesQuery,useDeleteCapsuleMutation}=capsuleApi

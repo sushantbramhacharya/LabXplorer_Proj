@@ -1,17 +1,29 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import CapsulesHome from '../../Components/Admin/Capsules';
-import { useAllCapsulesQuery } from '../../api/capsuleApi';
+import { useAllCapsulesQuery, useDeleteCapsuleMutation } from '../../api/capsuleApi';
 
 export const MainScreen = () => {
-  const { data: capsules, error, isLoading } = useAllCapsulesQuery();
+  const { data: capsules, error, isLoading,refetch } = useAllCapsulesQuery();
 
   // Ensure no hooks are called conditionally or inside functions
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
-
+  const [deleteCapsule] = useDeleteCapsuleMutation();
+  
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error fetching Capsules: {error.message}</div>;
+  
+  //Delete Functionality  
+  
+  const handleDeleteCapsule=async(capsuleId)=>{
+    if(confirm("Are You Sure to delete?"))
+    {
+      await deleteCapsule({capsuleId})
+      refetch()
+    }
+  }
+
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
@@ -72,6 +84,7 @@ export const MainScreen = () => {
             key={capsule.id}
             capsule={capsule}
             onEdit={handleEdit}
+            onDelete={handleDeleteCapsule}
           />
         ))}
       </div>

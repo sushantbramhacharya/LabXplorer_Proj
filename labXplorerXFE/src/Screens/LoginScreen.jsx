@@ -114,14 +114,7 @@ export default function Login() {
                 </div>
               </div>
               <div className="mt-4 flex items-center justify-between">
-                <label className="flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    name="remember"
-                    className="outline-none focus:outline focus:outline-sky-300"
-                  />
-                  <span className="text-xs">Remember me</span>
-                </label>
+                
                 <Link
                   to="/forgot-password"
                   className="text-sm font-medium text-foreground underline"

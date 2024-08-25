@@ -55,7 +55,7 @@ export const getCapsulesById = asyncHandler(async (req, res, next) => {
 //Admin Only
 export const deleteCapsule = asyncHandler(async (req, res, next) => {
   const { capsuleId } = req.body;
-  const result = await deleteCapsuleById(id);
+  const result = await deleteCapsuleById(capsuleId);
   if (result !== undefined) {
     res.json({ Success: "Successfully Deleted" });
   } else {
