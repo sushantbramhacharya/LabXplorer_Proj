@@ -36,6 +36,7 @@ import QuizScreen from "./Screens/QuizScreen.jsx";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import SearchResultsScreen from "./Screens/SearchResultsScreen.jsx";
+import QuizManagement from "./Screens/AdminScreens/QuizManagement.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -61,6 +62,7 @@ const router = createBrowserRouter(
       <Route path="capsules/:category" element={<CapsulesScreen/>}/>
       <Route path="capsule/:id" element={<SingleCapsuleScreen/>}/>
       <Route path="admin/" element={<AdminScreen />}>
+      <Route path="quiz-mgmnt/:capsuleId" element={<QuizManagement/>}/>
         <Route path="" element={<MainScreen />} />
         <Route path="add" element={<AddCapsules />} />
         <Route path="add-quiz" element={<AddQuizScreen/>}/>

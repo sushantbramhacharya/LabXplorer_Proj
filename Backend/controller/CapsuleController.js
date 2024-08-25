@@ -8,6 +8,14 @@ import {
   readQuizById,
   updateCapsuleById,
 } from "../models/CapsuleModel.js";
+import {   
+  updateQuiz, 
+  createQuiz, 
+  deleteQuiz, 
+  updateOptions, 
+  createOptions, 
+  deleteOptions 
+} from '../models/QuizModel.js';
 import { capitalizeFirstLetter } from "../utils/SomeUitls.js";
 
 export const getAllCapsules = asyncHandler(async (req, res, next) => {
@@ -95,4 +103,59 @@ export const getQuizByCapsuleId = asyncHandler(async (req, res, next) => {
   }
 });
 
+//update Quiz
+export const updateQuizzes = asyncHandler(async (req, res) => {
+  const { capsuleId, questions } = req.body; // Extract capsuleId and questions from request body
 
+  try {
+    // Fetch existing quizzes and options from the database
+    const existingQuizzes = await readQuizById(capsuleId);
+    const existingQuizMap = new Map(existingQuizzes.map(q => [q.id, q]));
+
+    // Determine which quizzes to update, insert, or delete
+    const quizzesToUpdate = [];
+    const quizzesToInsert = [];
+    const quizzesToDelete = [];
+
+    // Determine quizzes to update and insert
+    for (const incomingQuestion of questions || []) {
+      if (incomingQuestion.id) {
+        // Question exists in the database
+        const existingQuestion = existingQuizMap.get(incomingQuestion.id);
+
+        if (existingQuestion) {
+          quizzesToUpdate.push(incomingQuestion);
+          existingQuizMap.delete(incomingQuestion.id); // Mark for deletion if not present in incoming data
+        }
+      } else {
+        quizzesToInsert.push(incomingQuestion); // New question
+      }
+    }
+
+    // Remaining questions in the map are to be deleted
+    quizzesToDelete.push(...existingQuizMap.keys());
+
+    // Perform updates
+    for (const question of quizzesToUpdate) {
+      await updateQuiz(question);
+      await updateOptions(question.id, question.options);
+    }
+
+    // Perform inserts
+    for (const question of quizzesToInsert) {
+      const createdQuestion = await createQuiz(question,capsuleId);
+      await createOptions(createdQuestion.id, question.options);
+    }
+
+    // Perform deletions
+    for (const questionId of quizzesToDelete) {
+      await deleteQuiz(questionId);
+      await deleteOptions(questionId);
+    }
+
+    res.status(200).json({ message: 'Quiz data updated successfully' });
+  } catch (error) {
+    console.error('Failed to update quiz data:', error);
+    res.status(500).json({ error: 'Failed to update quiz data' });
+  }
+});
