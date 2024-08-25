@@ -71,13 +71,26 @@ export const deleteCapsule = asyncHandler(async (req, res, next) => {
   }
 });
 
+//edit
 export const editCapsule = asyncHandler(async (req, res, next) => {
-  const { capsuleId, column, updatedData } = req.body;
-  const result = await updateCapsuleById(capsuleId, column, updatedData);
-  if (result !== undefined) {
-    res.json({ Success: "Successfully Deleted" });
-  } else {
-    throw new Error("Error Occured Editing Capsule Check Server logs");
+  const { id:capsuleId } = req.body;
+  const updates={...req.body} // Exclude capsuleId from updates
+
+  try {
+    // Ensure that the updates object has proper values
+    if (!capsuleId || !Object.keys(updates).length) {
+      throw new Error('No capsuleId or update data provided');
+    }
+
+    const result = await updateCapsuleById(capsuleId, updates);
+
+    if (result) {
+      res.json({ success: "Successfully updated" });
+    } else {
+      throw new Error("Cannot update capsule");
+    }
+  } catch (error) {
+    next(error); // Pass the error to the error-handling middleware
   }
 });
 

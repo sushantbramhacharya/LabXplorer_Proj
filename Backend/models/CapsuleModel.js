@@ -123,18 +123,53 @@ export const deleteCapsuleById=async(id)=>{
 }
 
 //Update Capsule by Id and Column Name
-export const updateCapsuleById=async(id,col,val)=>{
-  try{
-    const result=await pool.query(`UPDATE capsules SET ${col}='${val}' WHERE id=${id}`)
-    return result
-  }
-  catch(err)
-  {
-    console.error("Error Updating Capsule by id ",err)
-    return undefined
-  }
-}
+export const updateCapsuleById = async (id, updates) => {
+  try {
+    // Build the SET clause dynamically for the capsules table
+    const { simulators, ...capsuleUpdates } = updates; // Exclude simulators if present
 
+    const setClause = Object.entries(capsuleUpdates)
+      .map(([key, value]) => {
+        // Handle potential array values or escape single quotes
+        if (Array.isArray(value)) {
+          return `${key}='${JSON.stringify(value)}'`;
+        }
+        return `${key}='${value.replace(/'/g, "''")}'`;
+      })
+      .join(', ');
+
+    // Construct the SQL query for updating the capsules table
+    const updateCapsuleQuery = `UPDATE capsules SET ${setClause} WHERE id=$1`;
+    await pool.query(updateCapsuleQuery, [id]);
+
+    // Handle the capsule_simulations table
+    if (simulators && simulators !== "None") {
+      // Remove existing simulations for this capsule
+      const deleteSimulationsQuery = `
+        DELETE FROM capsule_simulations WHERE capsule_id=$1;
+      `;
+      await pool.query(deleteSimulationsQuery, [id]);
+
+      // Insert the new simulation if provided
+      const insertSimulationQuery = `
+        INSERT INTO capsule_simulations (capsule_id, simulation_id)
+        VALUES ($1, $2);
+      `;
+      await pool.query(insertSimulationQuery, [id, simulators]);
+    } else {
+      // Ensure no simulations are linked if simulationId is "None" or not provided
+      const deleteSimulationsQuery = `
+        DELETE FROM capsule_simulations WHERE capsule_id=$1;
+      `;
+      await pool.query(deleteSimulationsQuery, [id]);
+    }
+
+    return { success: true };
+  } catch (err) {
+    console.error("Error updating capsule by id:", err);
+    return undefined;
+  }
+};
 
 //getQuiz
 export const readQuizById = async (id) => {
