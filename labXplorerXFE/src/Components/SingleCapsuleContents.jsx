@@ -76,6 +76,15 @@ const SingleCapsuleContents = ({id}) => {
             `}
           </style>
         </div>
+        {/* Simulator Button */}
+        {
+          capsule?.simulation_id?<div className="bg-transparent py-5">
+          <a className="bg-green-600 p-3 rounded-lg font-semibold " target="_blank" href={capsule.simulation_link}>
+            Open {capsule.simulation_name}
+          </a>
+        </div>:<></>
+        }
+        
         {/* PDF Button */}
         {capsule?.pdf && (
           <div className="inline-block my-5 bg-transparent">
@@ -124,7 +133,6 @@ const SingleCapsuleContents = ({id}) => {
           ))}
         </div>
       </div>
-
       {/* Image Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">

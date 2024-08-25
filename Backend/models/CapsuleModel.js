@@ -1,26 +1,37 @@
 import { pool } from "../config/db.js";
 
-export const insertCapsule = async (title, description, content, category, thumbnailUrl, imagesUrls, pdf, author_id) => {
+export const insertCapsule = async (title, description, content, category, thumbnailUrl, imagesUrls, pdf, author_id, simulationId) => {
   try {
     // Convert images array to a PostgreSQL array string
     const imagesArray = imagesUrls.length ? `{${imagesUrls.join(',')}}` : '{}';
 
-    // Prepare the SQL query with parameter placeholders
-    const query = `
+    // Insert into the capsules table
+    const insertCapsuleQuery = `
       INSERT INTO capsules (title, description, content, category, thumbnail, images, pdf, author_id)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-      RETURNING *;
+      RETURNING id;
     `;
+    const capsuleResult = await pool.query(insertCapsuleQuery, [title, description, content, category, thumbnailUrl, imagesArray, pdf, author_id]);
 
-    // Execute the query with parameters
-    const result = await pool.query(query, [title, description, content, category, thumbnailUrl, imagesArray, pdf, author_id]);
+    const capsuleId = capsuleResult.rows[0].id;
 
-    return result.rows[0];
+    // Insert into the capsule_simulations table
+
+    if (simulationId!=="None") {
+      const insertSimulationQuery = `
+        INSERT INTO capsule_simulations (capsule_id, simulation_id)
+        VALUES ($1, $2);
+      `;
+      await pool.query(insertSimulationQuery, [capsuleId, simulationId]);
+    }
+
+    return { id: capsuleId, ...capsuleResult.rows[0] };
   } catch (err) {
     console.error('Error inserting capsule:', err);
     return undefined;
   }
 };
+
 
 //Get Capsules
 export const readAllCapsules=async()=>{
@@ -47,17 +58,40 @@ export const readCapsulesByCategoryWithLimit=async(category,limit)=>{
 }
 
 //Reads Capsule from the db and return all stored for specific capsule
-export const readCapsuleById=async(id)=>
-{
-  try{
-    const result=await pool.query(`SELECT * FROM capsules WHERE id = ${id}`)
-    return result.rows[0];
-  }catch(err)
-  {
-    console.error("Error reading capsule from id ",err);
+export const readCapsuleById = async (id) => {
+  try {
+    const query = `
+      SELECT 
+        c.*, 
+    cs.simulation_id,
+    s.name AS simulation_name,
+    s.link AS simulation_link
+      FROM 
+        capsules c
+      LEFT JOIN 
+        capsule_simulations cs ON c.id = cs.capsule_id
+      LEFT JOIN 
+        simulations s ON cs.simulation_id = s.id
+      WHERE 
+        c.id = $1
+    `;
+    
+    const result = await pool.query(query, [id]);
+    
+    const capsule = result.rows[0];
+    
+    const simulator = result.rows['simulation_id']
+
+    return {
+      ...capsule,
+      simulations: simulator
+    };
+  } catch (err) {
+    console.error('Error reading capsule from id:', err);
     return undefined;
   }
-}
+};
+
 
 //Read Capsule By Name
 export const readCapsuleByName=async(capName)=>

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // Import the Quill styles
+import SimulatorSelect from './SimulationSelect';
+import axios from 'axios';
 
 const CapsuleForm = ({ capsule, onSave, onCancel }) => {
   const [formData, setFormData] = useState({
@@ -12,6 +14,7 @@ const CapsuleForm = ({ capsule, onSave, onCancel }) => {
     thumbnail: '',
     images: [],
     pdf: '',
+    simulators: 'None', // Add simulators field with default value
   });
 
   const [htmlContent, setHtmlContent] = useState(formData.content);
@@ -59,10 +62,10 @@ const CapsuleForm = ({ capsule, onSave, onCancel }) => {
     return title && description && content && category;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      onSave(formData);
+      onSave(formData)
     } else {
       alert('Please fill in all required fields.');
     }
@@ -123,6 +126,12 @@ const CapsuleForm = ({ capsule, onSave, onCancel }) => {
             ></textarea>
           </div>
           <div className="mb-4 col-span-2">
+            <SimulatorSelect 
+              selectedSimulator={formData.simulators}
+              onChange={(sim) => setFormData({ ...formData, simulators: sim.target.value })}
+            />
+          </div>
+          <div className="mb-4 col-span-2">
             <label htmlFor="thumbnail" className="block text-gray-300 text-lg font-semibold pb-2">
               Thumbnail
             </label>
@@ -156,7 +165,7 @@ const CapsuleForm = ({ capsule, onSave, onCancel }) => {
               multiple
             />
             <div className="mt-4 flex flex-wrap gap-4">
-              {formData?.images?.map((image, index) => (
+              {formData.images.map((image, index) => (
                 <img
                   key={index}
                   src={image}
@@ -227,14 +236,23 @@ const modules = {
     [{ 'header': '1' }, { 'header': '2' }],
     [{ 'list': 'ordered' }, { 'list': 'bullet' }],
     ['bold', 'italic', 'underline'],
-    ['link'],
     [{ 'align': [] }],
-    ['clean'] // Remove formatting button
+    ['link', 'image'],
+    ['clean']
   ],
 };
 
 const formats = [
-  'font', 'header', 'list', 'bullet', 'bold', 'italic', 'underline', 'link', 'align'
+  'font',
+  'header',
+  'list',
+  'bullet',
+  'bold',
+  'italic',
+  'underline',
+  'align',
+  'link',
+  'image',
 ];
 
 export default CapsuleForm;

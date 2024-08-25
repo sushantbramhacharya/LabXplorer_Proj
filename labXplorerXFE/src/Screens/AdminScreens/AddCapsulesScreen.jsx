@@ -30,6 +30,7 @@ export const AddCapsules = () => {
 
     data.append('category', formData.category);
     data.append('content', formData.content);
+    data.append('simulators', formData.simulators);
 
     try {
       console.log("gonna go");
