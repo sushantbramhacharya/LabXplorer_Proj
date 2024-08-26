@@ -12,7 +12,7 @@ const MainContent = () => {
   const [favouriteError, setFavouriteError] = useState(null);
   const [comments, setComments] = useState([]);
   const [loadingComments, setLoadingComments] = useState(true);
-  const [commentError, setCommentError] = useState(null);
+
 
   useEffect(() => {
     const fetchFavourites = async () => {
@@ -39,7 +39,7 @@ const MainContent = () => {
         );
         setComments(response.data);
       } catch (error) {
-        setCommentError(error.message);
+
       } finally {
         setLoadingComments(false);
       }
@@ -51,10 +51,10 @@ const MainContent = () => {
   if (loadingFavourites || loadingComments) return <div>Loading...</div>;
   if (favouriteError)
     return <div>Error fetching Favourites: {favouriteError}</div>;
-  if (commentError) return <div>Error fetching Comments: {commentError}</div>;
+ 
 
   return (
-    <div className="flex-row p-6 bg-slate-700">
+    <div className="flex-row p-6 w-full bg-slate-700">
       <h1 className="text-4xl font-semibold mb-4 p-2 rounded-md flex items-center ">
         <FaAtom className="inline fill-green-500 mr-2" />
         Welcome, {user.username}
@@ -91,7 +91,7 @@ const MainContent = () => {
             </div>
           ))
         ) : (
-          <p>No favourite capsules found.</p>
+          <p className="bg-transparent p-2">No favourite capsules found.</p>
         )}
       </div>
 
@@ -116,7 +116,7 @@ const MainContent = () => {
             ))}
           </ul>
         ) : (
-          <p>No comments found.</p>
+          <p className="p-4">No comments found.</p>
         )}
       </div>
     </div>

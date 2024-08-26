@@ -36,7 +36,7 @@ export const ProfileScreen = () => {
     <>
     <ToastContainer/>
     <NavBar/>
-    <div className='bg-gray-700 flex '>
+    <div className='bg-gray-700 min-w-screen min-h-screen flex '>
     <MainContent />
     </div>
     </>
