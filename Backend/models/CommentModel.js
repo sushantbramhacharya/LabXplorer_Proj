@@ -2,32 +2,43 @@ import { pool } from "../config/db.js";
 
 //Get Comments By Capsule ID
 export const getCommentsByCapsuleId = async (capsuleID) => {
-    try {
-      const result = await pool.query(
-        "SELECT * FROM comments WHERE capsule_id = $1",
-        [capsuleID]
-      );
-      return result.rows; // Return all comments for the specific capsule
-    } catch (err) {
-      console.error("Fetching Comments by Capsule ID \n", err);
-      return undefined;
-    }
-  };
-  
+  try {
+    const result = await pool.query(
+      "SELECT * FROM comments WHERE capsule_id = $1",
+      [capsuleID]
+    );
+    return result.rows; // Return all comments for the specific capsule
+  } catch (err) {
+    console.error("Fetching Comments by Capsule ID \n", err);
+    return undefined;
+  }
+};
+
 //Get Comments By User Id
 export const getCommentsByUserId = async (userID) => {
-    try {
-      const result = await pool.query(
-        "SELECT * FROM comments WHERE user_id = $1",
-        [userID]
-      );
-      return result.rows; // Return all comments made by the user
-    } catch (err) {
-      console.error("Fetching Comments by User ID \n", err);
-      return undefined;
-    }
-  };
-  
+  try {
+    const result = await pool.query(
+      `SELECT 
+            comments.comment_id,
+            capsule_id,
+            comments.comment_text,
+            capsules.title AS capsule_name
+        FROM 
+            comments
+        JOIN 
+            capsules 
+        ON 
+            comments.capsule_id = capsules.id
+        WHERE 
+            comments.user_id = $1;`,
+      [userID]
+    );
+    return result.rows; // Return all comments made by the user
+  } catch (err) {
+    console.error("Fetching Comments by User ID \n", err);
+    return undefined;
+  }
+};
 
 //Insert Comment
 export const insertComment = async (capsuleID, userID, commentText) => {

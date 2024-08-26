@@ -20,13 +20,19 @@ export const getUserById=async(id)=>{
         throw new Error("Error occured in DB")
     }
 }
-export const addUser=async(username,email,password)=>{
-    try{
-        const result = await pool.query(`INSERT INTO Users(username,email,password) VALUES('${username}','${email}','${password}')`)
-        return result
-    }
-    catch(err)
-    {
-        return undefined
-    }
-}
+export const addUser = async (username, email, password, verificationToken) => {
+    const result = await pool.query(
+        'INSERT INTO users (username, email, password, email_verification_token) VALUES ($1, $2, $3, $4) RETURNING *',
+        [username, email, password, verificationToken]
+    );
+    return result.rows[0];
+};
+
+// Verify user by token
+export const verifyUser = async (token) => {
+    const result = await pool.query(
+        'UPDATE users SET email_verified = TRUE, email_verification_token = NULL WHERE email_verification_token = $1 RETURNING *',
+        [token]
+    );
+    return result.rows[0];
+};

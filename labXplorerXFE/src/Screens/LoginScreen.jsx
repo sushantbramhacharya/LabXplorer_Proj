@@ -34,10 +34,11 @@ export default function Login() {
       if(user)
       {
         dispatch(setCredentials({...user}));
+        location.href='/'
       }
     }catch(err)
     {
-      toast.error("Enter Correct Credentials")
+      toast.error(err.data.message)
     }
   }
 
@@ -112,12 +113,12 @@ export default function Login() {
               </div>
               <div className="mt-4 flex items-center justify-between">
                 
-                <Link
+                {/* <Link
                   to="/forgot-password"
                   className="text-sm font-medium text-foreground underline"
                 >
                   Forgot password?
-                </Link>
+                </Link> */}
               </div>
               <div className="mt-4 flex items-center justify-end gap-x-2">
                 <Link

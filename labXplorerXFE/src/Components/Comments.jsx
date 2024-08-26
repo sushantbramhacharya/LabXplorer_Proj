@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { BASE_URL } from "../constants";
+import { FaTrash } from 'react-icons/fa';
 import { Link } from "react-router-dom";
 
 const Comments = ({ capsuleId }) => {
@@ -136,7 +137,7 @@ const Comments = ({ capsuleId }) => {
                 className="mt-2 mx-2 text-red-500 hover:underline"
                 onClick={() => handleDeleteComment(comment.comment_id)}
               >
-                Delete
+                <FaTrash className="mr-2" fill='red' />
               </button>
             )}
           </div>

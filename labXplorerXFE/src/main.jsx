@@ -33,7 +33,6 @@ import JSCodeEditor from "./Components/Simulations/ComputerSims/JavaScriptEditor
 import SimulationScreen from "./Screens/AdminScreens/SimulationScreen.jsx";
 import AddQuizScreen from "./Screens/AdminScreens/AddQuizScreen.jsx";
 import QuizScreen from "./Screens/QuizScreen.jsx";
-import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import SearchResultsScreen from "./Screens/SearchResultsScreen.jsx";
 import QuizManagement from "./Screens/AdminScreens/QuizManagement.jsx";
@@ -74,7 +73,6 @@ const router = createBrowserRouter(
 );
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-    <ToastContainer />
     <RouterProvider router={router} />
   </Provider>
 );

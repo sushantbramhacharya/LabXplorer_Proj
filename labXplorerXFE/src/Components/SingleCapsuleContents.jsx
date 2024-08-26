@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import NavBar from "../Components/NavBar";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import Quill styles
-
 import { useCapsuleByIdQuery } from "../api/capsuleApi"; // Adjust the path
-import { BASE_UPLOAD_URL } from "../constants";
+import { BASE_UPLOAD_URL, BASE_URL } from "../constants";
 import { Link } from "react-router-dom";
+import axios from 'axios';
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
 
-const SingleCapsuleContents = ({id}) => {
+axios.defaults.withCredentials = true;
 
+const SingleCapsuleContents = ({ id }) => {
   const {
     data: capsule,
     isLoading,
@@ -17,6 +19,37 @@ const SingleCapsuleContents = ({id}) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
+  const [isFavourite, setIsFavourite] = useState(false);
+
+  useEffect(() => {
+    const checkIfFavourite = async () => {
+      try {
+        // Replace this URL with your actual endpoint
+        const response = await axios.get(`${BASE_URL}/user/favourites/cap/${id}`);
+        
+        setIsFavourite(response.data.favourite);
+        console.log(isFavourite)
+      } catch (error) {
+        console.error("Error checking favourite status", error);
+      }
+    };
+
+    checkIfFavourite();
+  }, [id]);
+
+  const handleToggleFavourite = async () => {
+    try {
+      if (isFavourite) {
+        await axios.delete(`${BASE_URL}/user/favourites/remove`, { data: { capsule_id: id } });
+        setIsFavourite(false);
+      } else {
+        await axios.post(`${BASE_URL}/user/favourites/add`, { capsule_id: id });
+        setIsFavourite(true);
+      }
+    } catch (error) {
+      console.error("Error toggling favourite status", error);
+    }
+  };
 
   const openModal = (imageSrc) => {
     setSelectedImage(imageSrc);
@@ -28,32 +61,38 @@ const SingleCapsuleContents = ({id}) => {
     setSelectedImage("");
   };
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error loading capsule data</div>;
-
   const handleOpenPdf = () => {
     if (capsule?.pdf) {
       window.open(BASE_UPLOAD_URL + capsule.pdf, "_blank");
     }
   };
 
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error loading capsule data</div>;
+
   return (
     <>
       <NavBar />
       <div className="bg-slate-700 m-10 p-16 rounded-lg">
-        {/* Heading with Scoped Styles */}
         <h1 className="text-slate-300 my-6 text-3xl font-bold bg-transparent">
-          {capsule.title}
-          {capsule.hasQuiz?
-          <Link to={'/quiz/'+capsule.id} className="p-2 float-right bg-slate-800 rounded-lg hover:bg-slate-600">Launch Quiz</Link>:""}
-        
+          {capsule.title} 
+          {capsule.hasQuiz &&
+            <Link to={'/quiz/' + capsule.id} className="p-2 float-right bg-slate-800 rounded-lg hover:bg-slate-600">Launch Quiz</Link>
+          }
         </h1>
+        {/* Favourite Button */}
+        <button
+          onClick={handleToggleFavourite}
+          className="flex items-center mt-4 p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500"
+        >
+          {isFavourite ? <FaHeart className="text-lg" /> : <FaRegHeart className="text-lg" />}
+          <span className="ml-2">{isFavourite ? 'Remove from Favourites' : 'Add to Favourites'}</span>
+        </button>
         <hr className="my-2 border-t border-gray-500" />
         <p className="text-slate-400 text-xl italic bg-transparent">
           {capsule.description}
         </p>
 
-        {/* Quill Viewer */}
         <div className="mt-6 bg-transparent">
           <ReactQuill
             value={capsule.content}
@@ -76,16 +115,15 @@ const SingleCapsuleContents = ({id}) => {
             `}
           </style>
         </div>
-        {/* Simulator Button */}
-        {
-          capsule?.simulation_id?<div className="bg-transparent py-5">
-          <a className="bg-green-600 p-3 rounded-lg font-semibold " target="_blank" href={capsule.simulation_link}>
-            Open {capsule.simulation_name}
-          </a>
-        </div>:<></>
-        }
         
-        {/* PDF Button */}
+        {capsule?.simulation_id &&
+          <div className="bg-transparent py-5">
+            <a className="bg-green-600 p-3 rounded-lg font-semibold " target="_blank" href={capsule.simulation_link}>
+              Open {capsule.simulation_name}
+            </a>
+          </div>
+        }
+
         {capsule?.pdf && (
           <div className="inline-block my-5 bg-transparent">
             <p className="bg-transparent italic font-semibold">Check out document uploaded by author</p>
@@ -112,10 +150,7 @@ const SingleCapsuleContents = ({id}) => {
           </div>
         )}
 
-        {/* Responsive Image Gallery */}
         <div className="mt-6 grid grid-cols-1 bg-transparent sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 h-96">
-          {" "}
-          {/* Set fixed height here */}
           {capsule.images.map((image, index) => (
             <div
               key={index}
@@ -125,15 +160,15 @@ const SingleCapsuleContents = ({id}) => {
                 src={BASE_UPLOAD_URL + "uploads/" + image.slice(7)}
                 alt={`Capsule Image ${index + 1}`}
                 className="w-full h-full object-cover cursor-pointer"
-                onClick={() =>
-                  openModal(BASE_UPLOAD_URL + "uploads/" + image.slice(7))
-                } // Open modal on click
+                onClick={() => openModal(BASE_UPLOAD_URL + "uploads/" + image.slice(7))}
               />
             </div>
           ))}
         </div>
+
+        
       </div>
-      {/* Image Modal */}
+
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
           <div className="bg-white h-[90vh] p-4 rounded-lg relative">

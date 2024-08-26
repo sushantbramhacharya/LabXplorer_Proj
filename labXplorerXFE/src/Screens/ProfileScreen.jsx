@@ -7,7 +7,7 @@ import { useEffect } from "react";
 
 // Components
 import NavBar from '../Components/NavBar';
-import Sidebar from '../Components/Profile/Sidebar';
+
 import MainContent from '../Components/Profile/MainContext';
 import {ToastContainer,toast} from 'react-toastify';
 
@@ -36,8 +36,7 @@ export const ProfileScreen = () => {
     <>
     <ToastContainer/>
     <NavBar/>
-    <div className='bg-gray-700 flex h-screen'>
-    <Sidebar/>
+    <div className='bg-gray-700 flex '>
     <MainContent />
     </div>
     </>

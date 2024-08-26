@@ -37,7 +37,7 @@ export default function Register() {
           const res=await register({username,email,password}).unwrap()
           if(res)
           {
-            alert("Yay")
+            toast.success(res.success)
           }
         }
         catch(err)

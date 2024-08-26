@@ -97,9 +97,10 @@ const NavBar = () => {
           <a
           onClick={logoutHandler}
           className="lg:inline-block lg:w-auto w-full px-3 py-2 rounded-xl text-gray-300 items-center justify-center bg-red-600 hover:bg-red-700 hover:text-white"
-        >
+        >blue
           <span>Logout</span>
         </a>
+          <Link to={'/profile'} className="lg:inline-block lg:w-auto w-full px-3 py-2 rounded-xl text-gray-300 items-center justify-center bg-blue-600 hover:bg-blue-700 hover:text-white">Profile</Link>
        
         </>}
         {user?.email=="admin@labxplorerx.com"?<Link
