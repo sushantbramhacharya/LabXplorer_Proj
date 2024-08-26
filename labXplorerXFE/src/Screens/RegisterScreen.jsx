@@ -5,6 +5,7 @@ import { useRegisterMutation } from "../api/userApi";
 import { setCredentials } from '../Slices/userSlice';
 import { useNavigate } from "react-router-dom";
 import { useDispatch,useSelector } from 'react-redux';
+import { toast } from "react-toastify";
 
 export default function Register() {
   const [username, setUsername] = useState('')
@@ -41,16 +42,16 @@ export default function Register() {
         }
         catch(err)
         {
-          console.log(err?.data?.message)
+          toast.error("Recheck email or username might already Exists")
         }
       }
       else
       {
-        alert("Enter valid Email")
+        toast.error("Enter valid Email")
       }
     }
     else{
-      alert("Password Mismatch")
+      toast.error("Password Mismatch")
     }
   }
 

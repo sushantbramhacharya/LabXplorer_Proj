@@ -34,13 +34,10 @@ export default function Login() {
       if(user)
       {
         dispatch(setCredentials({...user}));
-        
-        toast.success('Login successful!');
-        navigator('/profile')
       }
     }catch(err)
     {
-      console.log(err?.data?.message)
+      toast.error("Enter Correct Credentials")
     }
   }
 

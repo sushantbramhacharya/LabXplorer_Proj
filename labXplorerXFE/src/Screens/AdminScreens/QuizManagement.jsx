@@ -3,12 +3,12 @@ import axios from 'axios';
 import QuizForm from '../../Components/Admin/QuizForm';
 import { BASE_URL } from '../../constants';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const QuizContainer = () => {
     const {capsuleId}=useParams()
   const [quiz, setQuiz] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     // Fetch quiz data with Axios
@@ -18,7 +18,6 @@ const QuizContainer = () => {
         console.log(response.data)
         setQuiz(response.data); // Assuming response.data is the quiz object
       } catch (err) {
-        setError('Failed to fetch quiz data');
         console.error('Failed to fetch quiz:', err);
       } finally {
         setLoading(false);
@@ -43,33 +42,26 @@ const QuizContainer = () => {
       .then(response => {
         console.log('Quiz saved:', response.data);
         // Optionally handle successful save here
+        toast.success('Sucessfully Saved Quiz');
       })
       .catch(error => {
-        console.error('Failed to save quiz:', error);
+        toast.success('Failed to Save Quiz');
         // Optionally handle errors here
       });
   };
   
 
-  const handleCancel = () => {
-    // Handle cancel action
-    console.log('Quiz editing canceled');
-  };
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  if (error) {
-    return <div>{error}</div>;
-  }
 
   return (
     <QuizForm 
       capsuleId={capsuleId} 
       quiz={quiz} 
       onSave={handleSaveQuiz} 
-      onCancel={handleCancel} 
     />
   );
 };

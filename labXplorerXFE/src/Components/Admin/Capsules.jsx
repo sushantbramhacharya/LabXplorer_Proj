@@ -1,5 +1,6 @@
 import React from 'react';
 import { BASE_UPLOAD_URL, BASE_URL } from '../../constants';
+import { Link } from 'react-router-dom';
 
 const Capsules = ({ capsule, onEdit, onDelete }) => {
   return (
@@ -24,6 +25,12 @@ const Capsules = ({ capsule, onEdit, onDelete }) => {
         >
           Delete
         </button>
+        <Link
+          to={'quiz-mgmnt/'+capsule?.id}
+          className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
+        >
+          Edit Quiz
+        </Link>
       </div>
     </div>
   );

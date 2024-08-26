@@ -189,15 +189,8 @@ const QuizForm = ({ capsuleId, quiz, onSave, onCancel }) => {
 
         <div className="flex pt-4 justify-end gap-4">
           <button
-            type="button"
-            className="bg-gray-600 text-white p-3 rounded-lg shadow hover:bg-gray-700 transition-colors"
-            onClick={onCancel}
-          >
-            Cancel
-          </button>
-          <button
             type="submit"
-            className="bg-blue-600 text-white p-3 rounded-lg shadow hover:bg-blue-700 transition-colors"
+            className="bg-slate-600 text-white p-3 rounded-lg shadow hover:bg-slate-700 transition-colors"
           >
             Save Quiz
           </button>

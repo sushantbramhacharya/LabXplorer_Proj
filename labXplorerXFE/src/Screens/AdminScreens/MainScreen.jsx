@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import CapsulesHome from '../../Components/Admin/Capsules';
 import { useAllCapsulesQuery, useDeleteCapsuleMutation } from '../../api/capsuleApi';
 
 export const MainScreen = () => {
   const { data: capsules, error, isLoading,refetch } = useAllCapsulesQuery();
+  const navigate=useNavigate();
 
   // Ensure no hooks are called conditionally or inside functions
   const [searchQuery, setSearchQuery] = useState('');
@@ -29,12 +30,10 @@ export const MainScreen = () => {
     setSearchQuery(e.target.value);
   };
 
-  const handleCategoryChange = (e) => {
-    setSelectedCategory(e.target.value);
-  };
+
 
   const handleEdit = (id) => {
-    console.log('Edit capsule with ID:', id);
+    navigate('edit-capsules/'+id)
     // Implement edit functionality
   };
 
@@ -58,20 +57,9 @@ export const MainScreen = () => {
           onChange={handleSearchChange}
         />
         
-        <select
-          className="p-3 border border-gray-300 rounded-lg flex-1"
-          value={selectedCategory}
-          onChange={handleCategoryChange}
-        >
-          <option value="">Select Category</option>
-          <option value="chemistry">Chemistry</option>
-          <option value="physics">Physics</option>
-          <option value="astronomy">Astronomy</option>
-          {/* Add more categories as needed */}
-        </select>
-
+       
         <Link
-          to='/admin/add'
+             to='/admin/add'
           className="bg-blue-500 text-white p-3 rounded-lg shadow hover:bg-blue-600 transition-colors flex-none"
         >
           Add Capsule

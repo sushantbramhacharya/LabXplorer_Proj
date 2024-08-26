@@ -1,4 +1,3 @@
-import { pool } from "../config/db.js";
 import asyncHandler from "../middleware/asyncHandler.js";
 import { insertCapsule } from "../models/CapsuleModel.js";
 import { getAllSimulations, getSimulationByCategory, insertSimulations } from "../models/SimulationModel.js";
