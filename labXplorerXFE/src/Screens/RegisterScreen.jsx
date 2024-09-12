@@ -37,21 +37,21 @@ export default function Register() {
           const res=await register({username,email,password}).unwrap()
           if(res)
           {
-            toast.success(res.success)
+            alert(res.success)
           }
         }
         catch(err)
         {
-          toast.error("Recheck email or username might already Exists")
+          alert("Recheck email or username might already Exists")
         }
       }
       else
       {
-        toast.error("Enter valid Email")
+        alert("Enter valid Email")
       }
     }
     else{
-      toast.error("Password Mismatch")
+      alert("Password Mismatch")
     }
   }
 

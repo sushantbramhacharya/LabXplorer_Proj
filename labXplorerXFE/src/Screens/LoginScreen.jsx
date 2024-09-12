@@ -38,7 +38,7 @@ export default function Login() {
       }
     }catch(err)
     {
-      toast.error(err.data.message)
+      alert(err.data.message)
     }
   }
 

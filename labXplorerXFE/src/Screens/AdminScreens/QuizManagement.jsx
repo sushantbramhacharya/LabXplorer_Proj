@@ -42,10 +42,10 @@ const QuizContainer = () => {
       .then(response => {
         console.log('Quiz saved:', response.data);
         // Optionally handle successful save here
-        toast.success('Sucessfully Saved Quiz');
+        alert('Sucessfully Saved Quiz');
       })
       .catch(error => {
-        toast.success('Failed to Save Quiz');
+        alert('Failed to Save Quiz');
         // Optionally handle errors here
       });
   };

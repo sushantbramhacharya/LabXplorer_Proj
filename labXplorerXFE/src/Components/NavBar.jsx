@@ -32,20 +32,20 @@ const NavBar = () => {
     dispatch(logoutUser())
     .then(() => {
       // Notify success
-      toast.success("Logout Successful");
+      alert("Logout Successful");
       location.href='/'
       navigate('/');
     })
     .catch((error) => {
       // Handle any potential errors here
-      toast.error("Logout failed. Please try again.");
+      alert("Logout failed. Please try again.");
     });
   }
 
   return (
     <>
       <ToastContainer/>
-    <nav className="flex items-center bg-gray-800 px-20 p-3 flex-wrap">
+    <nav className="flex items-center bg-gray-800 px-10 md:px-20 lg:px-30 p-3 flex-wrap">
       <Link to="/" className="p-2 mr-4 inline-flex items-center">
        <img className='mr-4' src='/logo.png' width={40} height={40}/>
         <span className="text-xl text-white font-bold tracking-wide">

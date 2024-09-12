@@ -24,11 +24,8 @@ const SingleCapsuleContents = ({ id }) => {
   useEffect(() => {
     const checkIfFavourite = async () => {
       try {
-        // Replace this URL with your actual endpoint
         const response = await axios.get(`${BASE_URL}/user/favourites/cap/${id}`);
-        
         setIsFavourite(response.data.favourite);
-        console.log(isFavourite)
       } catch (error) {
         console.error("Error checking favourite status", error);
       }
@@ -73,23 +70,25 @@ const SingleCapsuleContents = ({ id }) => {
   return (
     <>
       <NavBar />
-      <div className="bg-slate-700 m-10 p-16 rounded-lg">
-        <h1 className="text-slate-300 my-6 text-3xl font-bold bg-transparent">
+      <div className="bg-slate-700 m-4 md:m-8 lg:m-10 p-4 md:p-8 lg:p-12 rounded-lg">
+        <h1 className="text-slate-300 my-4 text-2xl md:text-3xl font-bold bg-transparent">
           {capsule.title} 
-          {capsule.hasQuiz &&
-            <Link to={'/quiz/' + capsule.id} className="p-2 float-right bg-slate-800 rounded-lg hover:bg-slate-600">Launch Quiz</Link>
-          }
+          {capsule.hasQuiz && (
+            <Link to={'/quiz/' + capsule.id} className="p-2 float-right bg-slate-800 rounded-lg hover:bg-slate-600 text-sm md:text-base">
+              Launch Quiz
+            </Link>
+          )}
         </h1>
         {/* Favourite Button */}
         <button
           onClick={handleToggleFavourite}
-          className="flex items-center mt-4 p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500"
+          className="flex items-center mt-4 p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 text-sm md:text-base"
         >
           {isFavourite ? <FaHeart className="text-lg" /> : <FaRegHeart className="text-lg" />}
           <span className="ml-2">{isFavourite ? 'Remove from Favourites' : 'Add to Favourites'}</span>
         </button>
-        <hr className="my-2 border-t border-gray-500" />
-        <p className="text-slate-400 text-xl italic bg-transparent">
+        <hr className="my-4 border-t border-gray-500" />
+        <p className="text-slate-400 text-lg md:text-xl italic bg-transparent">
           {capsule.description}
         </p>
 
@@ -115,21 +114,21 @@ const SingleCapsuleContents = ({ id }) => {
             `}
           </style>
         </div>
-        
-        {capsule?.simulation_id &&
+
+        {capsule?.simulation_id && (
           <div className="bg-transparent py-5">
-            <a className="bg-green-600 p-3 rounded-lg font-semibold " target="_blank" href={capsule.simulation_link}>
+            <a className="bg-green-600 p-3 rounded-lg font-semibold text-white" target="_blank" href={capsule.simulation_link}>
               Open {capsule.simulation_name}
             </a>
           </div>
-        }
+        )}
 
         {capsule?.pdf && (
           <div className="inline-block my-5 bg-transparent">
-            <p className="bg-transparent italic font-semibold">Check out document uploaded by author</p>
+            <p className="bg-transparent italic font-semibold text-sm md:text-base">Check out document uploaded by author</p>
             <button
               onClick={handleOpenPdf}
-              className="flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm md:text-base"
             >
               <svg
                 className="w-5 h-5 mr-2"
@@ -150,7 +149,7 @@ const SingleCapsuleContents = ({ id }) => {
           </div>
         )}
 
-        <div className="mt-6 grid grid-cols-1 bg-transparent sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 h-96">
+        <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
           {capsule.images.map((image, index) => (
             <div
               key={index}
@@ -165,13 +164,11 @@ const SingleCapsuleContents = ({ id }) => {
             </div>
           ))}
         </div>
-
-        
       </div>
 
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
-          <div className="bg-white h-[90vh] p-4 rounded-lg relative">
+          <div className="bg-white p-4 rounded-lg relative max-w-full max-h-full">
             <button
               onClick={closeModal}
               className="absolute top-2 right-2 text-2xl font-bold text-gray-700 hover:text-gray-900"
