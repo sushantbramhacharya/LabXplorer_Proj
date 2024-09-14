@@ -125,49 +125,58 @@ export const deleteCapsuleById=async(id)=>{
 //Update Capsule by Id and Column Name
 export const updateCapsuleById = async (id, updates) => {
   try {
-    // Build the SET clause dynamically for the capsules table
-    const { simulators, ...capsuleUpdates } = updates; // Exclude simulators if present
+    const { simulators, ...capsuleUpdates } = updates;
 
-    const setClause = Object.entries(capsuleUpdates)
-      .map(([key, value]) => {
-        // Handle potential array values or escape single quotes
-        if (Array.isArray(value)) {
-          return `${key}='${JSON.stringify(value)}'`;
-        }
-        return `${key}='${value.replace(/'/g, "''")}'`;
-      })
-      .join(', ');
+    // Create an array to hold the values for the parameterized query
+    let updateValues = [id];
+    let setClause = '';
+
+    // Dynamically build the SET clause
+    Object.keys(capsuleUpdates).forEach((key, index) => {
+      const value = capsuleUpdates[key];
+
+      if (value !== null && value !== undefined) {
+        if (setClause !== '') setClause += ', ';
+        setClause += `${key}=$${updateValues.length + 1}`;
+        updateValues.push(Array.isArray(value) ? JSON.stringify(value) : value);
+      } else {
+        if (setClause !== '') setClause += ', ';
+        setClause += `${key}=NULL`;
+      }
+    });
 
     // Construct the SQL query for updating the capsules table
     const updateCapsuleQuery = `UPDATE capsules SET ${setClause} WHERE id=$1`;
-    await pool.query(updateCapsuleQuery, [id]);
+    await pool.query(updateCapsuleQuery, updateValues);
 
-    // Handle the capsule_simulations table
+    // Handle the capsule_simulations table for simulators
     if (simulators && simulators !== "None") {
       // Remove existing simulations for this capsule
-      const deleteSimulationsQuery = `
-        DELETE FROM capsule_simulations WHERE capsule_id=$1;
-      `;
+      const deleteSimulationsQuery = `DELETE FROM capsule_simulations WHERE capsule_id=$1`;
       await pool.query(deleteSimulationsQuery, [id]);
 
-      // Insert the new simulation if provided
-      const insertSimulationQuery = `
-        INSERT INTO capsule_simulations (capsule_id, simulation_id)
-        VALUES ($1, $2);
-      `;
-      await pool.query(insertSimulationQuery, [id, simulators]);
+      // Check if simulators is an array and insert multiple simulations
+      const insertSimulationQuery = `INSERT INTO capsule_simulations (capsule_id, simulation_id) VALUES ($1, $2)`;
+      
+      if (Array.isArray(simulators)) {
+        // Insert multiple simulations
+        for (const simulatorId of simulators) {
+          await pool.query(insertSimulationQuery, [id, simulatorId]);
+        }
+      } else {
+        // Insert a single simulation
+        await pool.query(insertSimulationQuery, [id, simulators]);
+      }
     } else {
-      // Ensure no simulations are linked if simulationId is "None" or not provided
-      const deleteSimulationsQuery = `
-        DELETE FROM capsule_simulations WHERE capsule_id=$1;
-      `;
+      // Ensure no simulations are linked if simulators is "None" or not provided
+      const deleteSimulationsQuery = `DELETE FROM capsule_simulations WHERE capsule_id=$1`;
       await pool.query(deleteSimulationsQuery, [id]);
     }
 
     return { success: true };
   } catch (err) {
     console.error("Error updating capsule by id:", err);
-    return undefined;
+    throw err; // Propagate the error
   }
 };
 

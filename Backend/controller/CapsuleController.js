@@ -72,9 +72,21 @@ export const deleteCapsule = asyncHandler(async (req, res, next) => {
 });
 
 //edit
-export const editCapsule = asyncHandler(async (req, res, next) => {
-  const { id:capsuleId } = req.body;
-  const updates={...req.body} // Exclude capsuleId from updates
+export const editCapsule = asyncHandler(async (req, res, next) => { 
+  const { id: capsuleId } = req.body;
+
+  // Extract files from request
+  const thumbnail = req.files?.thumbnail ? req.files.thumbnail[0].path : '';
+  const images = req.files?.images ? req.files.images.map(file => file.path) : [];
+  const pdf = req.files?.pdf ? req.files.pdf[0].path : '';
+
+  // Prepare the updates object
+  const updates = {
+    ...req.body, // Take other properties from the request body
+    thumbnail: thumbnail || req.body.thumbnail, // Keep existing thumbnail if not updated
+    images: images.length ? images : req.body.images, // Keep existing images if not updated
+    pdf: pdf || req.body.pdf, // Keep existing PDF if not updated
+  };
 
   try {
     // Ensure that the updates object has proper values
