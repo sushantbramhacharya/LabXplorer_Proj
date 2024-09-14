@@ -25,35 +25,36 @@ export default function Register() {
   },[])
 
   const [register,{isLoading}]=useRegisterMutation()
-  const handleSubmit=async(e)=>{
-    e.preventDefault()
-    if(cpassword===password)
-    {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if(emailRegex.test(email))
-      {
-        try{
-          //Need to fix register
-          const res=await register({username,email,password}).unwrap()
-          if(res)
-          {
-            alert(res.success)
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    // Password validation (at least 8 characters, includes at least 1 number)
+    const passwordRegex = /^(?=.*[0-9])(?=.{8,})/;
+  
+    if (cpassword === password) {
+      if (passwordRegex.test(password)) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (emailRegex.test(email)) {
+          try {
+            // Proceed with registration
+            const res = await register({ username, email, password }).unwrap();
+            if (res) {
+              alert(res.success);
+            }
+          } catch (err) {
+            alert("Recheck email or username might already exist");
           }
+        } else {
+          alert("Enter a valid Email");
         }
-        catch(err)
-        {
-          alert("Recheck email or username might already Exists")
-        }
+      } else {
+        alert("Password must be at least 8 characters long and contain at least 1 number");
       }
-      else
-      {
-        alert("Enter valid Email")
-      }
+    } else {
+      alert("Password Mismatch");
     }
-    else{
-      alert("Password Mismatch")
-    }
-  }
+  };
+  
 
   return (
     <div className="bg-gray-800 text-white flex min-h-screen flex-col items-center pt-16 sm:justify-center sm:pt-0">
